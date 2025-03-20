@@ -12,13 +12,13 @@
 
 
 
-#define  USART_REC_LEN  150
-#define GPS_Buffer_Length 150
-#define UTCTime_Length 11
-#define latitude_Length 11
-#define N_S_Length 2
-#define longitude_Length 12
-#define E_W_Length 2 
+#define  USART_REC_LEN  150 //定义最大接收字节数 150
+#define GPS_Buffer_Length 150//GPS缓存长度
+#define UTCTime_Length 11//UTC时间长度
+#define latitude_Length 11//纬度长度
+#define N_S_Length 2//N/S长度
+#define longitude_Length 12//经度长度
+#define E_W_Length 2 //E/W长度
 #include "string.h"
 
 typedef struct SaveData 
@@ -33,7 +33,9 @@ typedef struct SaveData
 	char E_W[E_W_Length];		//E/W
 	char isUsefull;		//定位信息是否有效
 } _SaveData;
+ extern _SaveData Save_Data;
 
-void GPS_Init(void);
-void parseGpsBuffer(void);
+
+void GPS_Init(void);//GPS初始化
+void parseGpsBuffer(void);//解析获取GPS数据
 #endif

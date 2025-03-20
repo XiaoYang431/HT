@@ -1,0 +1,88 @@
+<html>
+<body>
+<pre>
+<h1>µVision Build Log</h1>
+<h2>Tool Versions:</h2>
+IDE-Version: ¦ÌVision V5.24.2.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: y tan, d, LIC=KRMW3-A9UG7-9UC4U-S07XC-P81HB-APFE9
+ 
+Tool Versions:
+Toolchain:       MDK-ARM Plus  Version: 5.24.1
+Toolchain Path:  D:\stm32 application\ARM\ARMCLANG\Bin
+C Compiler:      ArmClang.exe V6.7
+Assembler:       Armasm.exe V6.7
+Linker/Locator:  ArmLink.exe V6.7
+Library Manager: ArmAr.exe V6.7
+Hex Converter:   FromElf.exe V6.7
+CPU DLL:         SARMCM3.DLL V5.24.1
+Dialog DLL:      DARMCM1.DLL V1.18.0.0
+Target DLL:      CMSIS_AGDI.dll V1.28.3.0
+Dialog DLL:      TARMCM1.DLL V1.13.0.0
+ 
+<h2>Project:</h2>
+D:\Hotelic\hetai\HT\project\MDK_ARMv5\project.uvprojx
+Project File Date:  03/20/2025
+
+<h2>Output:</h2>
+*** Using Compiler 'V6.7', folder: 'D:\stm32 application\ARM\ARMCLANG\Bin'
+Build target 'HT32'
+../../hardware/GPS.c(121): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                printf(Save_Data.UTCTime);
+                       ^~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(121): note: treat the string as an argument to avoid this
+                printf(Save_Data.UTCTime);
+                       ^
+                       "%s", 
+../../hardware/GPS.c(128): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.latitude);
+                               ^~~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(128): note: treat the string as an argument to avoid this
+                        printf(Save_Data.latitude);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(133): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.N_S);
+                               ^~~~~~~~~~~~~
+../../hardware/GPS.c(133): note: treat the string as an argument to avoid this
+                        printf(Save_Data.N_S);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(137): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.longitude);
+                               ^~~~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(137): note: treat the string as an argument to avoid this
+                        printf(Save_Data.longitude);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(141): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.E_W);
+                               ^~~~~~~~~~~~~
+../../hardware/GPS.c(141): note: treat the string as an argument to avoid this
+                        printf(Save_Data.E_W);
+                               ^
+                               "%s", 
+5 warnings generated.
+compiling GPS.c...
+compiling Blueteeth.c...
+linking...
+Program Size: Code=4576 RO-data=64 RW-data=4 ZI-data=1144  
+FromELF: creating hex file...
+".\HT32\52352\HT32.axf" - 0 Error(s), 5 Warning(s).
+
+<h2>Software Packages used:</h2>
+
+Package Vendor: Holtek
+                https://mcu.holtek.com.tw/pack/Holtek.HT32_DFP.1.0.63.pack
+                Holtek.HT32_DFP.1.0.63
+                Holtek HT32 Family Support
+
+<h2>Collection of Component include folders:</h2>
+  .\RTE\_HT32
+  D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx
+
+<h2>Collection of Component Files used:</h2>
+Build Time Elapsed:  00:00:02
+</pre>
+</body>
+</html>

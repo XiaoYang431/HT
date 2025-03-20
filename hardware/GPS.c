@@ -5,7 +5,7 @@
 
  uint16_t point1 = 0;
  char USART_RX_BUF[USART_REC_LEN];
- _SaveData Save_Data = {0};
+_SaveData Save_Data = {0};
 
 void GPS_Init(void)
 {
@@ -54,6 +54,7 @@ void errorLog(int num)
 	}
 }
 //获取位置信息
+//需要通过商家给的串口进行初始化配置
 void parseGpsBuffer(void)
 {
 	char *subString;
@@ -62,8 +63,8 @@ void parseGpsBuffer(void)
 	if (Save_Data.isGetData)
 	{
 		Save_Data.isGetData = false;
-		printf("**************\r\n");
-		printf(Save_Data.GPS_Buffer);
+		//printf("**************\r\n");
+		///printf(Save_Data.GPS_Buffer);
 
 		
 		for (i = 0 ; i <= 6 ; i++)
