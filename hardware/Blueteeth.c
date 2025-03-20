@@ -1,5 +1,8 @@
 #include "ht32f5xxxx_01.h"
 #include "Blueteeth.h"
+#include "GPS.h"
+
+//------------------------------------------------------------------------------------------
  //蓝牙（串口0）初始化
 void BLUETEETH_USART_Init(void)
 {
@@ -53,6 +56,40 @@ void BLUETEETH_USART_Tx(const char* TxBuffer, u32 length)
     //while (USART_GetFlagStatus(HT_USARTx, USART_FLAG_TXDE) == RESET); // 判断是否 发送完成
   }
 }
+
+void GPS_To_BlueTooth(void)
+{
+    if (Save_Data.isParseData && Save_Data.isUsefull)
+	{
+		//复位标志位
+			Save_Data.isUsefull = false;
+      Save_Data.isParseData = false;
+
+    //发送数据
+    BLUETEETH_USART_Tx("Save_Data.UTCTime = ", 19);
+    BLUETEETH_USART_Tx(Save_Data.UTCTime, 11);
+    BLUETEETH_USART_Tx("\r\n", 2);
+    BLUETEETH_USART_Tx("Save_Data.latitude = ", 21);
+    BLUETEETH_USART_Tx(Save_Data.latitude, 11);
+    BLUETEETH_USART_Tx("\r\n", 2);
+    BLUETEETH_USART_Tx("Save_Data.N_S = ", 17);
+    BLUETEETH_USART_Tx(Save_Data.N_S, 2);
+    BLUETEETH_USART_Tx("\r\n", 2);
+    BLUETEETH_USART_Tx("Save_Data.longitude = ", 22);
+    BLUETEETH_USART_Tx(Save_Data.longitude, 12);
+    BLUETEETH_USART_Tx("\r\n", 2);
+    BLUETEETH_USART_Tx("Save_Data.E_W = ", 17);
+    BLUETEETH_USART_Tx(Save_Data.E_W, 2);
+    BLUETEETH_USART_Tx("\r\n", 2);
+
+
+		
+			
+		}	
+}
+
+
+
 
 
 
