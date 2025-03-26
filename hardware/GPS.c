@@ -203,3 +203,21 @@ void CLR_Buf(void)                           // 串口缓存清理
 	memset(USART_RX_BUF, 0, USART_REC_LEN);      //清空
     point1 = 0;                    
 }
+
+void GPS_ReStart(void)
+{
+	USART_SendData(GPS_UART_HT, "$PCAS10,2*1E\r\n");
+}
+void GPS_Stop(void)
+{
+	USART_SendData(GPS_UART_HT, "$PCAS03,0,0,0,0,0,0,0,0*02\r\n");
+}
+void GPS_Set_Start(void)
+{
+	USART_SendData(GPS_UART_HT, "$PCAS03,0,0,0,0,1,0,0,0*03\r\n\r\n");
+}
+//永久保存配置信息
+void GPS_Save_Config(void)
+{
+	USART_SendData(GPS_UART_HT, "$PCAS00*01\r\n");
+}

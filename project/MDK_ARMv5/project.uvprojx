@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HT32_DRIVER, USE_BM53A367A_DVB, USE_HT32F52357_67, USE_MEM_HT32F52367</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware</IncludePath>
+              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware;..\..\hardware</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -679,6 +679,16 @@
               <FileName>BMP73T104.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\hardware\BMP73T104.h</FilePath>
+            </File>
+            <File>
+              <FileName>SIM900A.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\SIM900A.c</FilePath>
+            </File>
+            <File>
+              <FileName>SIM900A.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\SIM900A.h</FilePath>
             </File>
           </Files>
         </Group>

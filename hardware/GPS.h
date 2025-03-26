@@ -21,6 +21,15 @@
 #define E_W_Length 2 //E/W长度
 #include "string.h"
 
+
+
+/*
+	经纬度换算公式
+纬度：ddmm.mmmm 北纬 2236.9453 22+(36.9453/60)= 22.615755
+经度：dddmm.mmmm 东经 11408.4790 114+(08.4790/60)=114.141317
+
+
+*/
 typedef struct SaveData 
 {
 	char GPS_Buffer[GPS_Buffer_Length];
@@ -38,4 +47,8 @@ typedef struct SaveData
 
 void GPS_Init(void);//GPS初始化
 void parseGpsBuffer(void);//解析获取GPS数据
+void GPS_ReStart(void);//GPS重启
+void GPS_Stop(void);//GPS停止
+void GPS_Set_Start(void);//GPS开始
+void GPS_Save_Config(void);//GPS保存配置
 #endif
