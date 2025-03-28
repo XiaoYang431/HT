@@ -27,7 +27,7 @@
 
 /* Includes ------------------------------------------------------------------------------------------------*/
 #include "ht32.h"
-
+#include "GPS.h"
 /** @addtogroup Project_Template Project Template
   * @{
   */
@@ -106,10 +106,10 @@ void PendSV_Handler(void)
  * @brief   This function handles SysTick Handler.
  * @retval  None
  ************************************************************************************************************/
-void SysTick_Handler(void)
+/*void SysTick_Handler(void)
 {
 }
-
+*/
 /*********************************************************************************************************//**
  * @brief   This function handles LVD & BOD interrupt.
  * @retval  None
@@ -314,9 +314,47 @@ void SysTick_Handler(void)
  * @brief   This function handles USART interrupt.
  * @retval  None
  ************************************************************************************************************/
-//void USART0_IRQHandler(void)
-//{
-//}
+ 
+
+void USART0_IRQHandler(void)
+{
+	extern uint16_t point1;
+	extern char USART_RX_BUF[USART_REC_LEN];
+	extern _SaveData Save_Data;
+	// Check if UART0 receive interrupt is pending
+    if(USART_GetFlagStatus(GPS_UART_HT, USART_FLAG_RXDR) == SET)
+    {
+    uint8_t Res = 0;
+    USART_ClearFlag(GPS_UART_HT, USART_FLAG_RXDR);
+        Res =USART_ReceiveData(GPS_UART_HT);//(USART1->DR);	//读取接收到的数据
+	
+	if(Res == '$')
+	  {
+		point1 = 0;	
+	  }
+		
+	  USART_RX_BUF[point1++] = Res;
+
+	if(USART_RX_BUF[0] == '$' && USART_RX_BUF[4] == 'M' && USART_RX_BUF[5] == 'C')			//确定是否收到"GPRMC/GNRMC"这一帧数据
+	  {
+		if(Res == '\n')									   
+		{
+			memset(Save_Data.GPS_Buffer, 0, GPS_Buffer_Length);      //清空
+			memcpy(Save_Data.GPS_Buffer, USART_RX_BUF, point1); 	//保存数据
+			Save_Data.isGetData = true;
+			point1 = 0;
+			memset(USART_RX_BUF, 0, USART_REC_LEN);      //清空				
+		}			
+	  }
+	
+	if(point1 >= USART_REC_LEN)
+	  {
+		point1 = USART_REC_LEN;
+	  }	
+    }
+	
+	
+}
 
 /*********************************************************************************************************//**
  * @brief   This function handles USART interrupt.
