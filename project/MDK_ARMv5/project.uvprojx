@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HT32_DRIVER, USE_BM53A367A_DVB, USE_HT32F52357_67, USE_MEM_HT32F52367</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware;..\..\hardware</IncludePath>
+              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware;..\..\hardware;..\..\utilities\middleware</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -479,6 +479,26 @@
               <FileName>i2c_master.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\utilities\middleware\i2c_master.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\utilities\middleware\uart_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>uart_module.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\utilities\middleware\uart_module.h</FilePath>
+            </File>
+            <File>
+              <FileName>ring_buffer.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\utilities\common\ring_buffer.c</FilePath>
+            </File>
+            <File>
+              <FileName>ring_buffer.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\utilities\common\ring_buffer.h</FilePath>
             </File>
           </Files>
         </Group>
@@ -651,16 +671,6 @@
               <FilePath>..\..\hardware\GPS.h</FilePath>
             </File>
             <File>
-              <FileName>MOTOR.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\hardware\MOTOR.c</FilePath>
-            </File>
-            <File>
-              <FileName>MOTOR.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\hardware\MOTOR.h</FilePath>
-            </File>
-            <File>
               <FileName>DELAY.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\hardware\DELAY.c</FilePath>
@@ -689,6 +699,16 @@
               <FileName>SIM900A.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\hardware\SIM900A.h</FilePath>
+            </File>
+            <File>
+              <FileName>BM32S2031_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\BM32S2031_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>BM32S2031_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\BM32S2031_1.h</FilePath>
             </File>
           </Files>
         </Group>

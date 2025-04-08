@@ -10,13 +10,13 @@
                 "d:\\Hotelic\\hetai\\HT\\library\\HT32_USBD_Library\\inc",
                 "d:\\Hotelic\\hetai\\HT\\utilities",
                 "d:\\Hotelic\\hetai\\HT\\hardware",
+                "d:\\Hotelic\\hetai\\HT\\utilities\\middleware",
                 "D:\\stm32 application\\ARM\\ARMCLANG\\include",
                 "D:\\stm32 application\\ARM\\ARMCLANG\\include\\libcxx",
                 "d:\\Hotelic\\hetai\\HT\\project",
                 "d:\\Hotelic\\hetai\\HT\\project\\MDK_ARMv5",
                 "d:\\Hotelic\\hetai\\HT\\library\\HT32F5xxxx_Driver\\src",
                 "d:\\Hotelic\\hetai\\HT\\utilities\\common",
-                "d:\\Hotelic\\hetai\\HT\\utilities\\middleware",
                 "d:\\Hotelic\\hetai\\HT\\library\\HT32_USBD_Library\\src"
             ],
             "defines": [
