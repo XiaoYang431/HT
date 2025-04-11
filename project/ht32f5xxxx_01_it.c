@@ -28,6 +28,8 @@
 /* Includes ------------------------------------------------------------------------------------------------*/
 #include "ht32.h"
 #include "GPS.h"
+#include "Motor.h"
+uint8_t Decode_count = 0;
 /** @addtogroup Project_Template Project Template
   * @{
   */
@@ -258,9 +260,15 @@ void PendSV_Handler(void)
  * @brief   This function handles BFTM interrupt.
  * @retval  None
  ************************************************************************************************************/
-//void BFTM0_IRQHandler(void)
-//{
-//}
+void BFTM0_IRQHandler(void)
+{
+  if(BFTM_GetFlagStatus(HT_BFTM0) == SET)
+  {
+    BFTM_ClearFlag(HT_BFTM0);
+     Decode_count = HTCFG_CAP_PORT_decode1A->CNTR;//获取编码器计数值
+    // Do something
+  }
+}
 
 /*********************************************************************************************************//**
  * @brief   This function handles BFTM interrupt.

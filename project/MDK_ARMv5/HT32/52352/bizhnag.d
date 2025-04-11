@@ -1,5 +1,4 @@
-./ht32/52352/ht32f5xxxx_01_it.o: ../ht32f5xxxx_01_it.c \
-  ../../library/HT32F5xxxx_Driver/inc\ht32.h \
+./ht32/52352/bizhnag.o: ../../hardware/Bizhnag.c \
   ../../library/Device/Holtek/HT32F5xxxx/Include\ht32f5xxxx_01.h \
   ../../library/HT32F5xxxx_Driver/inc\ht32_config.h \
   ../../library/CMSIS/Include\core_cm0plus.h \
@@ -45,6 +44,9 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_cm0plus_misc.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
-  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h ../../hardware\GPS.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h \
-  ../../hardware\Motor.h
+  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
+  ../../hardware/BM32S2031_1.h ..\i2c_master_config.h \
+  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
+  ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h \
+  ../../utilities\middleware/uart_module.h

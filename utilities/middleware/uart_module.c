@@ -466,10 +466,10 @@ void UARTM_DiscardReadBuffer(u32 CH)
  * @brief   This function handles UART interrupt.
  * @retval  None
  ************************************************************************************************************/
-void USART0_IRQHandler(void)
-{
-  USART0_IRQ_HANDLER();
-}
+//void USART0_IRQHandler(void)
+//{
+//  USART0_IRQ_HANDLER();
+//}
 #endif
 #if defined(HT_USART1) && defined(USART1_IRQ_HANDLER)
 /*********************************************************************************************************//**

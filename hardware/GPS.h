@@ -34,6 +34,8 @@ typedef struct SaveData
 	char isUsefull;		//定位信息是否有效
 } _SaveData;
 
+extern _SaveData Save_Data;
+
 void GPS_Init(void);
 void parseGpsBuffer(void);
 #endif

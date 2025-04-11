@@ -35,14 +35,14 @@ void BLUETEETH_USART_Init(void)
 }
 //------------------------------------------------------------------------------------------
 //蓝牙（串口0） 发生数据空中断函数
-void USART0_IRQHandler(void)
-{
-  u8 data;
-  if( USART_GetFlagStatus(HT_USART0, USART_FLAG_RXDR) ) // 接收器 FIFO 就绪标志位
-    {                                                                                                                                                                                    
-     data = USART_ReceiveData(HT_USART0); // 接收数据时已经自动清除中断标志位了，不用手动清除。      
-    }             
-}
+//void USART0_IRQHandler(void)
+//{
+//  u8 data;
+//  if( USART_GetFlagStatus(HT_USART0, USART_FLAG_RXDR) ) // 接收器 FIFO 就绪标志位
+//    {                                                                                                                                                                                    
+//     data = USART_ReceiveData(HT_USART0); // 接收数据时已经自动清除中断标志位了，不用手动清除。      
+//    }             
+//}
 //------------------------------------------------------------------------------------------
 //蓝牙（串口0） 接收数据就绪函数
 void BLUETEETH_USART_Tx(const char* TxBuffer, u32 length)

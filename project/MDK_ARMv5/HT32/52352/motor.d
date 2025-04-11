@@ -1,4 +1,4 @@
-./ht32/52352/motor.o: ../../hardware/MOTOR.c \
+./ht32/52352/motor.o: ../../hardware/Motor.c \
   ../../library/Device/Holtek/HT32F5xxxx/Include\ht32f5xxxx_01.h \
   ../../library/HT32F5xxxx_Driver/inc\ht32_config.h \
   ../../library/CMSIS/Include\core_cm0plus.h \
@@ -44,5 +44,8 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_cm0plus_misc.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
-  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h ../../hardware/MOTOR.h \
-  ../../hardware/PWM.h
+  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
+  ../../hardware/BMP73T104.h ..\i2c_master_config.h \
+  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
+  ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h ../../hardware/Motor.h

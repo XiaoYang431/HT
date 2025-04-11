@@ -45,7 +45,13 @@
 #define   BMP73T104_INTPIN_AFIO_PIN    STRCAT2(AFIO_PIN_,    0)
 #define   BMP73T104_INTPIN_GPIO_PORT   STRCAT2(HT_GPIO,      B)
 #define   BMP73T104_INTPIN_GPIO_PIN    STRCAT2(GPIO_PIN_,    0)
+
+#define  BM32S2031_1_SERIAL  (1)
+
+
+
 #endif
+
 
 /*----------------------------------------------------------------------------------------------------------*/
 /* USE_HT32F52352_SK                                                                                        */

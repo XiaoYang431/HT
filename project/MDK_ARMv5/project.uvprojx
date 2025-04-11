@@ -710,6 +710,26 @@
               <FileType>5</FileType>
               <FilePath>..\..\hardware\BM32S2031_1.h</FilePath>
             </File>
+            <File>
+              <FileName>Motor.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\Motor.c</FilePath>
+            </File>
+            <File>
+              <FileName>Motor.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\Motor.h</FilePath>
+            </File>
+            <File>
+              <FileName>Bizhnag.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\Bizhnag.c</FilePath>
+            </File>
+            <File>
+              <FileName>Bizhang.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\Bizhang.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

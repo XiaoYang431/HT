@@ -1,5 +1,8 @@
 {
     "files.associations": {
-        "uart_module.h": "c"
+        "uart_module.h": "c",
+        "ht32_config.h": "c",
+        "bmduino_check.h": "c",
+        "ht32_board_config.h": "c"
     }
 }

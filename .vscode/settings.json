@@ -1,0 +1,6 @@
+{
+    "files.associations": {
+        "bm32s2031_1.h": "c",
+        "ht32_board_config.h": "c"
+    }
+}

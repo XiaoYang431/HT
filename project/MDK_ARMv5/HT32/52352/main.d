@@ -50,7 +50,4 @@
   ../../utilities\common/i2c_eeprom.h ../../utilities\common/spi_flash.h \
   ../../utilities\common/spi_lcd.h ../../utilities\common/lcd.h \
   ../../utilities\common/ebi_lcd.h ../../hardware\DELAY.h \
-  ../../hardware\BMP73T104.h ..\i2c_master_config.h \
-  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
-  ../../utilities\bmduino_check.h \
-  ../../utilities\middleware/i2c_master.h
+  ../../hardware\Bizhang.h ../../hardware\Motor.h
