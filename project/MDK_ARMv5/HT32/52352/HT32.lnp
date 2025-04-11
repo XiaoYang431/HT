@@ -48,6 +48,7 @@
 ".\ht32\52352\bm32s2031_1.o"
 ".\ht32\52352\motor.o"
 ".\ht32\52352\bizhnag.o"
+".\ht32\52352\bms56m605.o"
 ".\ht32\52352\ht32_usbd_core.o"
 --library_type=microlib --ro-base 0x00000000 --entry 0x00000000 --rw-base 0x20000000 --entry Reset_Handler --first __Vectors --strict
 --entry Reset_Handler --summary_stderr --info summarysizes --map --load_addr_map_info --xref --callgraph --symbols

@@ -730,6 +730,16 @@
               <FileType>5</FileType>
               <FilePath>..\..\hardware\Bizhang.h</FilePath>
             </File>
+            <File>
+              <FileName>BMS56M605.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\BMS56M605.c</FilePath>
+            </File>
+            <File>
+              <FileName>BMS56M605.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\BMS56M605.h</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>
