@@ -29,7 +29,8 @@
 #include "ht32.h"
 #include "GPS.h"
 #include "Motor.h"
-uint8_t Decode_count = 0;
+int16_t   encder_left;
+int16_t   encder_right; 
 /** @addtogroup Project_Template Project Template
   * @{
   */
@@ -265,7 +266,10 @@ void BFTM0_IRQHandler(void)
   if(BFTM_GetFlagStatus(HT_BFTM0) == SET)
   {
     BFTM_ClearFlag(HT_BFTM0);
-     Decode_count = HTCFG_CAP_PORT_decode1A->CNTR;//获取编码器计数值
+     encder_left = HTCFG_CAP_PORT_decode1A->CNTR;//获取编码器计数值
+     encder_right = HTCFG_CAP_PORT_decode2A->CNTR;//获取编码器计数值
+     HTCFG_CAP_PORT_decode1A->CNTR = 0;//获取编码器计数值
+     HTCFG_CAP_PORT_decode2A->CNTR = 0;//获取编码器计数值
     // Do something
   }
 }
