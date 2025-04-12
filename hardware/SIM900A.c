@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Delay.h"
+
 
 
 
@@ -39,7 +39,7 @@ uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
 	if(ack == NULL)	return 0;
 	while(time--)
 	{
-		Delay_ms(10);
+		//Delay_ms(10);
 		//寻找要找的关键词 找到关中断接收 并且返回0
 		if(strstr((char *)sim900a_receive_data,(char *)ack) != NULL)
 		{
@@ -72,7 +72,7 @@ uint8_t sim900a_send_end(uint8_t data,uint8_t *ack,uint16_t time)
 	
 	while(time--)
 	{
-		Delay_ms(10);
+		//Delay_ms(10);
 		//寻找要找的关键词 找到关中断接收 并且返回0
 		if(strstr((char *)sim900a_receive_data,(char *)ack) != NULL)
 		{

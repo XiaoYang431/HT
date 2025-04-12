@@ -48,4 +48,6 @@
   ../../hardware/BMP73T104.h ..\i2c_master_config.h \
   ..\ht32_board_config.h ../../utilities\bmduino_board.h \
   ../../utilities\bmduino_check.h \
-  ../../utilities\middleware/i2c_master.h ../../hardware/Motor.h
+  ../../utilities\middleware/i2c_master.h ../../hardware/Motor.h \
+  ../../hardware/BMS56M605.h ../../hardware/Kaerman.h \
+  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\math.h

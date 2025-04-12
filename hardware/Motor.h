@@ -1,6 +1,12 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
+extern int16_t encder_left;
+extern int16_t encder_right;
+ extern  int16_t Speed_left;
+ extern int16_t Speed_right;
+
+
 #define Motor_Left_up 0x01//正数为正转
 #define Motor_Left_down 0x02//正数为正转
 #define Motor_Right_up 0x04//负数为正转
@@ -8,6 +14,8 @@
 
 #define V_IOref 5  //过流保护参考电压
 #define Iset 2   //过流保护电流
+
+//左前轮
 /************************************电机一编码器A相****************************************8*/
 #define Motor_decode1A_GPIOX                        A               // D27
 #define Motor_decode1A_GPION                        4
@@ -32,6 +40,8 @@
 #define HTCFG_CAP_CH_decode1B                              STRCAT2(TM_CH_,         Motor_decode1B_CHN)
 /************************************电机一编码器B相****************************************8*/
 
+
+//右前轮
 /************************************电机二编码器A相****************************************8*/
   #define Motor_decode2A_GPIOX                        A               // D27
   #define Motor_decode2A_GPION                        14
@@ -84,6 +94,10 @@ void Motor_Run(uint8_t Motor_Nam,int8_t Speed);
 void Motor_Stop(uint8_t Motor_Nam);
 void Motor_shache(uint8_t Motor_Nam);
 void Motor_Get_decode_TMInit(void);
+int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right);
+int16_t velocity(int16_t Targrt_Speed,int16_t encoder_left,int16_t encoder_right);
+uint8_t BMS56M605_init(void);
+int16_t Bizhnag_Start(void);
 
 
 #endif

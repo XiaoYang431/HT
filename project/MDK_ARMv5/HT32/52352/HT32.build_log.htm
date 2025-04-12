@@ -27,18 +27,18 @@ Project File Date:  04/11/2025
 <h2>Output:</h2>
 *** Using Compiler 'V6.7', folder: 'D:\stm32 application\ARM\ARMCLANG\Bin'
 Build target 'HT32'
-compiling BMS56M605.c...
-../../hardware/Motor.c(131): warning: control reaches end of non-void function [-Wreturn-type]
+../../hardware/Motor.c(273): warning: implicit declaration of function 'BM32S2031_1_getIRStatus' is invalid in C99 [-Wimplicit-function-declaration]
+      if(BM32S2031_1_getIRStatus() == 1)
+         ^
+../../hardware/Motor.c(285): warning: control reaches end of non-void function [-Wreturn-type]
 }
 ^
-1 warning generated.
+2 warnings generated.
 compiling Motor.c...
-compiling ht32f5xxxx_01_it.c...
-compiling main.c...
 linking...
-Program Size: Code=3824 RO-data=32 RW-data=4 ZI-data=1344  
+Program Size: Code=3812 RO-data=32 RW-data=4 ZI-data=1352  
 FromELF: creating hex file...
-".\HT32\52352\HT32.axf" - 0 Error(s), 1 Warning(s).
+".\HT32\52352\HT32.axf" - 0 Error(s), 2 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -52,7 +52,7 @@ Package Vendor: Holtek
   D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:06
+Build Time Elapsed:  00:00:02
 </pre>
 </body>
 </html>

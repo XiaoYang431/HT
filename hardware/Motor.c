@@ -1,9 +1,12 @@
 #include "ht32f5xxxx_01.h"              // Device header
 #include "BMP73T104.h"
 #include "Motor.h"
+#include "BMS56M605.h"
+#include "Kaerman.h"
+#include "Bizhang.h"
 //使用I2C_MASTER_CH1，引脚为PC4，PC5
-extern int16_t encder_left;
-extern int16_t encder_right;
+
+
 uint8_t Motor_Init(void)
 {
     /*
@@ -67,7 +70,7 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
 	 TM_TimeBaseStructInit(&TimeBaseIniture);
 	 
  //对定时器时基以及计数方式初始化
-	 TimeBaseIniture.CounterMode=TM_CNT_MODE_UP;                //边沿对齐向上计数
+	// TimeBaseIniture.CounterMode=TM_CNT_MODE_UP;                //边沿对齐向上计数
 	 TimeBaseIniture.CounterReload=768*2*4;                           //计数重装载计数器
 	 TimeBaseIniture.Prescaler=0;                               //预分频系数
 	 TimeBaseIniture.PSCReloadTime=TM_PSC_RLD_IMMEDIATE;        //立即重装载预分频寄存器
@@ -77,15 +80,15 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
  
  
  
-//     TM_CaptureInitTypeDef  CapInit;
+     TM_CaptureInitTypeDef  CapInit;
 //
-//    TM_CaptureStructInit(&CapInit);
-//    CapInit.Channel = HTCFG_CAP_CH_decode1A | HTCFG_CAP_CH_decode1B;
+    TM_CaptureStructInit(&CapInit);
+    CapInit.Channel = HTCFG_CAP_CH_decode1A | HTCFG_CAP_CH_decode1B;
 //    CapInit.Polarity = TM_CHP_NONINVERTED;
 //    CapInit.Selection = TM_CHCCS_DIRECT;
 //    CapInit.Prescaler = TM_CHPSC_OFF;
-//    CapInit.Filter = 0x0;
-//    TM_CaptureInit(HTCFG_CAP_PORT_decode1B, &CapInit);
+  CapInit.Filter = 0xF;
+   TM_CaptureInit(HTCFG_CAP_PORT_decode1B, &CapInit);
 //  TM_StiConfig(HTCFG_CAP_PORT_decode1B, TM_TRSEL_TI0S0);
 //
 //  /* Slave Mode selection: Trigger Mode                                                                     */
@@ -95,8 +98,7 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
 
    TM_DecoderConfig(HTCFG_CAP_PORT_decode1A, TM_SMSEL_DECODER3,                   //模式3双边沿计数
                         TM_CHP_NONINVERTED, TM_CHP_NONINVERTED);   //编码器模式的设置
-	
-   TM_ChExternalClockConfig(HTCFG_CAP_PORT_decode1A, TM_TRSEL_TI0BED, TM_CHP_INVERTED, 6);//比较滤波器
+   //TM_ChExternalClockConfig(HTCFG_CAP_PORT_decode1A, TM_TRSEL_TI0BED, TM_CHP_INVERTED, 6);//比较滤波器
 	//TM_IntConfig(HTCFG_CAP_PORT_decode1A, TM_INT_CH1CC | TM_INT_UEV, ENABLE);//禁用中断
 
    HTCFG_CAP_PORT_decode1A->CNTR=0;      //计数器初始值
@@ -111,7 +113,7 @@ void Motor_Get_decode_TMInit(void)
     
     // 设置定时器计数器初值和比较值
     BFTM_SetCounter(HT_BFTM0, 0);
-    BFTM_SetCompare(HT_BFTM0, SystemCoreClock/200);  //5ms产生中断
+    BFTM_SetCompare(HT_BFTM0, SystemCoreClock/200);  //5ms产生中断,及200Hz
     
     // 清除中断标志位     
     BFTM_ClearFlag(HT_BFTM0);
@@ -166,15 +168,15 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
  
  
  
-//     TM_CaptureInitTypeDef  CapInit;
+   TM_CaptureInitTypeDef  CapInit;
 //
-//    TM_CaptureStructInit(&CapInit);
-//    CapInit.Channel = HTCFG_CAP_CH_decode1A | HTCFG_CAP_CH_decode1B;
+    TM_CaptureStructInit(&CapInit);
+    CapInit.Channel = HTCFG_CAP_CH_decode2A | HTCFG_CAP_CH_decode2B;
 //    CapInit.Polarity = TM_CHP_NONINVERTED;
 //    CapInit.Selection = TM_CHCCS_DIRECT;
 //    CapInit.Prescaler = TM_CHPSC_OFF;
-//    CapInit.Filter = 0x0;
-//    TM_CaptureInit(HTCFG_CAP_PORT_decode1B, &CapInit);
+    CapInit.Filter = 0xF;
+   TM_CaptureInit(HTCFG_CAP_PORT_decode1B, &CapInit);
 //  TM_StiConfig(HTCFG_CAP_PORT_decode1B, TM_TRSEL_TI0S0);
 //
 //  /* Slave Mode selection: Trigger Mode                                                                     */
@@ -185,7 +187,7 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
    TM_DecoderConfig(HTCFG_CAP_PORT_decode2A, TM_SMSEL_DECODER3,                   //模式3双边沿计数
                         TM_CHP_NONINVERTED, TM_CHP_NONINVERTED);   //编码器模式的设置
 	
-   TM_ChExternalClockConfig(HTCFG_CAP_PORT_decode2A, TM_TRSEL_TI0BED, TM_CHP_INVERTED, 6);//比较滤波器
+  // TM_ChExternalClockConfig(HTCFG_CAP_PORT_decode2A, TM_TRSEL_TI0BED, TM_CHP_INVERTED, 6);//比较滤波器
 	//TM_IntConfig(HTCFG_CAP_PORT_decode1A, TM_INT_CH1CC | TM_INT_UEV, ENABLE);//禁用中断
 
    HTCFG_CAP_PORT_decode2A->CNTR=0;      //计数器初始值
@@ -199,7 +201,7 @@ int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right)
     static int16_t bias = 0;
 	int16_t Turn_Amplitude=100, turn, encoder_temp;
 	
-	encoder_temp = encoder_left - encoder_right;
+	encoder_temp = encoder_left + encoder_right;
 	bias += encoder_temp; //对角速度积分
 	
 	//限幅
@@ -213,20 +215,70 @@ int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right)
 	return turn;
 
 }
-int16_t velocity(int16_t Targrt_Speed,int16_t encoder_left,int16_t encoder_right,int16_t RC)
-{  
-	static float Velocity,Encoder_Least,Encoder;
-	static float Encoder_Integral;
+int16_t velocity(int16_t Targrt_Speed,int16_t encoder_left,int16_t encoder_right)
+{  //Targrt_Speed单位是毫米
+	static float Velocity,Encoder_Least,Encoder =0;
+   static float Encoder_last = 0;
+	static float Encoder_Integral=0;
 	float velocity_KP=-150;//-300;
 	float velocity_KI=-0;//-0.5;	
-   int16_t Targrt= Targrt_Speed;
+   float velocity_KD=0.5;
+   int32_t Targrt= (Targrt_Speed/(200*3.14*65))*890;
 	Encoder_Least =(encoder_left-encoder_right)/2-Targrt;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
 	Encoder *= 0.7;		                                                //===一阶低通滤波器       
 	Encoder += Encoder_Least*0.3;	                                    //===一阶低通滤波器    
 	Encoder_Integral +=Encoder;                                       //===积分出位移 积分时间：5ms                                     
 	if(Encoder_Integral>15000)  	Encoder_Integral=15000;             //===积分限幅
-	if(Encoder_Integral<-15000)		Encoder_Integral=-15000;          //===积分限幅	
-	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI*RC;        //===速度控制					
-	return Velocity;
+	if(Encoder_Integral<-15000)		Encoder_Integral=-15000;            //===积分限幅	
+
+	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI+ velocity_KD*(Encoder-Encoder_last);        //===速度控制					
+	Encoder_last = Encoder;	//===上次速度值
+ 
+   
+   return Velocity;
+}
+uint8_t BMS56M605_init(void)
+{
+    BMS56M605_selWire(I2C_MASTER_CH1);
+
+   BMS56M605_Init();
+    BMS56M605_reset();
+     //BMS56M605_enableCycle(1);
+BMS56M605_setGyroRange(BMS56M605_GYRO_RANGE_2000);
+BMS56M605_setAccelerometerRange(BMS56M605_ACC_RANGE_2G);
+ //BMS56M605_setCycleRate(BMS56M605_F_1_25HZ);
+ BMS56M605_setSampleRateDivisor(1000/200-1);//200HZ
+BMS56M605_setFilterBandwidth(BMS56M605_ACC_96HZ_GYRO_98HZ);
+BMS56M605_writeReg(BMS56M605_REG_USER_CTRL,0X00);	//I2C主模式关闭
+	BMS56M605_writeReg(BMS56M605_REG_FIFO_EN,0X00);	//开启FIFO
+	BMS56M605_writeReg(BMS56M605_REG_INT_PIN_CFG,0X80);	//INT引脚低电平有效
+	uint8_t res = 0;
+   res = BMS56M605_readReg(BMS56M605_REG_WHO_AM_I); 
+	if(res==0X68)//器件ID正确
+	{
+	BMS56M605_writeReg(BMS56M605_REG_PWR_MGMT_1,0X01);	//设置CLKSEL,PLL X轴为参考
+	BMS56M605_writeReg(BMS56M605_REG_PWR_MGMT_2,0X00);	//加速度与陀螺仪都工作
+   BMS56M605_setSampleRateDivisor(1000/200-1);
+   BMS56M605_setFilterBandwidth(BMS56M605_ACC_96HZ_GYRO_98HZ);
+ 	}else return 1;
+	return 0;
 }
   
+
+int16_t Bizhnag_Start(void)
+{
+   int16_t Turn = 0,Velocity = 0;
+      if(BM32S2031_1_getIRStatus() == 1)
+      {
+      Turn = PID_Turn(0,0,0);
+       Velocity = velocity(0,0,0,0);
+           // _BM32S2031_1_delay(1000);
+      }
+      else
+      {
+          Velocity = velocity(0,0,0,0);
+      }
+      Speed_left = Velocity + Turn;
+      Speed_right = Velocity - Turn;
+}
+

@@ -1,4 +1,4 @@
-./ht32/52352/sim900a.o: ../../hardware/SIM900A.c ../../hardware/SIM900A.h \
+./ht32/52352/kaerman.o: ../../hardware/Kaerman.c \
   ../../library/Device/Holtek/HT32F5xxxx/Include\ht32f5xxxx_01.h \
   ../../library/HT32F5xxxx_Driver/inc\ht32_config.h \
   ../../library/CMSIS/Include\core_cm0plus.h \
@@ -45,6 +45,8 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\time.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\stdlib.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h
+  ../../hardware/BMS56M605.h ..\i2c_master_config.h \
+  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
+  ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h ../../hardware/Kaerman.h \
+  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\math.h

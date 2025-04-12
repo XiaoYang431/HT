@@ -49,5 +49,5 @@
   ../../utilities/HT32_Board/bm53a367a_dvb.h \
   ../../utilities\common/i2c_eeprom.h ../../utilities\common/spi_flash.h \
   ../../utilities\common/spi_lcd.h ../../utilities\common/lcd.h \
-  ../../utilities\common/ebi_lcd.h ../../hardware\DELAY.h \
-  ../../hardware\Bizhang.h ../../hardware\Motor.h
+  ../../utilities\common/ebi_lcd.h ../../hardware\Bizhang.h \
+  ../../hardware\Motor.h

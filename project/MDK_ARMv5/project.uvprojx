@@ -671,16 +671,6 @@
               <FilePath>..\..\hardware\GPS.h</FilePath>
             </File>
             <File>
-              <FileName>DELAY.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\hardware\DELAY.c</FilePath>
-            </File>
-            <File>
-              <FileName>DELAY.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\hardware\DELAY.h</FilePath>
-            </File>
-            <File>
               <FileName>BMP73T104.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\hardware\BMP73T104.c</FilePath>
@@ -739,6 +729,16 @@
               <FileName>BMS56M605.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\hardware\BMS56M605.h</FilePath>
+            </File>
+            <File>
+              <FileName>Kaerman.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\Kaerman.c</FilePath>
+            </File>
+            <File>
+              <FileName>Kaerman.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\Kaerman.h</FilePath>
             </File>
           </Files>
         </Group>
