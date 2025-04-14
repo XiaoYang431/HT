@@ -1,37 +1,62 @@
 #include "ht32f5xxxx_01.h"
-#include "Blueteeth.h"
+#include "Blueteech.h"
 #include "GPS.h"
+#include "BM7701_00_1.h"
+#include <string.h> // 用于 memcpy
+//获取gps信息
+extern _SaveData Save_Data;
 
+uint8_t BM7701_00_1_bleProcess(void);
+void _blueteech_delay(vu32 count);
+//蓝牙连接状态
+bool board_connect = false;
+//rx状态
+bool board_receive = false;
+bool board_conIntv = false;
+uint8_t Status;         //BLE status
+uint8_t flag=0;
+uint8_t count=0;
+uint8_t sel = 1;
+uint8_t receiveBuf[256] = {0};
+uint8_t BDAddress[6] = {0x11, 0x22, 0x33, 0x44, 0x55, 0x66}; //Device address
+uint8_t BDName[] = {'B', 'M', 'C', '7', '7', 'M', '0', '0', '1'};//Device name
+uint8_t Adata[] = {0x02, 0x01, 0x06}; 					//advertising data
+uint8_t Sdata[] = {0x03, 0x02, 0x0f, 0x18};     //scan response data
 //------------------------------------------------------------------------------------------
  //蓝牙（串口0）初始化
-void BLUETEETH_USART_Init(void)
+void BLUETEETH_Init(void)
 {
-  USART_InitTypeDef USART_InitStruct; 
-  
-  CKCU_PeripClockConfig_TypeDef CKCUClock = {{0}};
-  CKCUClock.Bit.USART0   = 1;
-  CKCUClock.Bit.AFIO     = 1;
-  CKCUClock.Bit.PA      = 1;
-  CKCU_PeripClockConfig(CKCUClock, ENABLE);
-  // PA2--Tx  PA3--Rx
-  AFIO_GPxConfig(GPIO_PA, AFIO_PIN_2, AFIO_MODE_6);  // 复用功能  AFIO_FUN_USART_UART
-  AFIO_GPxConfig(GPIO_PA, AFIO_PIN_3, AFIO_MODE_6);  
- 
-  GPIO_PullResistorConfig(HT_GPIOA, GPIO_PIN_3, GPIO_PR_UP);  // 打开UxART0 Rx内部上拉电阻 
+    BM7701_00_1_Init(BM7701_00_1_BAUD_115200);
+	BM7701_00_1_reset();
+	
+	while (sel != 10)
+  {
+    switch (sel)
+    {
+      case 1: if (BM7701_00_1_setAddress(BDAddress) == true) sel++;                        //Set address
+        else sel = 0xFF; break;
+      case 2: if (BM7701_00_1_setName(sizeof(BDName), BDName) == true) sel++;              //Set Bluetooth Name  (max:31)
+        else sel = 0xFF; break;
+      case 3: if (BM7701_00_1_setAdvIntv(ADV_MIN / 0.625, ADV_MAX / 0.625, 7) == true) sel++; //Set AdvIntv
+        else sel = 0xFF; break;
+      case 4: if (BM7701_00_1_setAdvData(BM7701_00_1_APPEND_NAME, sizeof(Adata), Adata) == true) sel++; //Set AdvData
+        else sel = 0xFF; break;
+      case 5: if (BM7701_00_1_setScanData(sizeof(Sdata), Sdata) == true) sel++;            //Set ScanData
+        else sel = 0xFF; break;
+      case 6: if (BM7701_00_1_setTXpower(TX_POWER) == true) sel++;                         //Set TX power
+        else sel = 0xFF; break;
+      case 7: if (BM7701_00_1_setCrystalOffset(XTAL_CLOAD) == true) sel++;                     //Set Xtal Cload
+        else sel = 0xFF; break;
+      case 8: if (BM7701_00_1_setFeature(BM7701_00_1_FEATURE_DIR,BM7701_00_1_AUTO_SEND_SATUS) == true) sel++;     //Auto Send Satus
+        else sel = 0xFF; break;
+      case 9: if (BM7701_00_1_setAdvCtrl(BM7701_00_1_ENABLE) == true) sel++;                  //Turn on broadcast
+        else sel = 0xFF; break;
+      case 0xFF:   
       
-  USART_InitStruct.USART_BaudRate = 115200;  // 波特率
-  USART_InitStruct.USART_WordLength = USART_WORDLENGTH_8B; // 数据长度
-  USART_InitStruct.USART_StopBits = USART_STOPBITS_1; // 停止位
-  USART_InitStruct.USART_Parity = USART_PARITY_NO; // 校验位
-  USART_InitStruct.USART_Mode = USART_MODE_NORMAL; // 模式
-  USART_Init(HT_USART0, &USART_InitStruct); 
-  
-  //USART_IntConfig(HT_USARTx, USART_INT_RXDR ,ENABLE or DISABLE) // 接收数据就绪中断
-  //USART_IntConfig(HT_USARTx, USART_INT_TXDE ,ENABLE or DISABLE) // 发送数据空中断   
-  //NVIC_EnableIRQ(USART0_IRQn); // 使能中断
- 
-  USART_RxCmd(HT_USART0, ENABLE); // 使能USART接收数据
-  USART_TxCmd(HT_USART0, ENABLE); // 使能USART发送数据
+        break;//Configure fail
+		}
+		blueteech_delay(650);
+	}
 }
 //------------------------------------------------------------------------------------------
 //蓝牙（串口0） 发生数据空中断函数
@@ -44,52 +69,128 @@ void BLUETEETH_USART_Init(void)
 //    }             
 //}
 //------------------------------------------------------------------------------------------
+
+//根据蓝牙状态执行相应动作
+void Get_blueteech_status(void)
+{
+Status = BM7701_00_1_bleProcess();                                   //Read BLE status
+  if (Status)
+  {
+    switch (Status)
+    {
+      case BM7701_00_1_API_CONNECTED:
+        if (board_connect == false)
+        {
+          board_connect = true;
+          board_receive = false;
+        }
+        break;
+      case BM7701_00_1_API_DISCONNECTED:
+        board_connect = false;
+        board_receive = false;
+        board_conIntv = false;
+        break;
+      case BM7701_00_1_DATA_RECEIVED:
+        if (board_connect == true)
+        {					
+          board_receive = true;
+        }
+        break;
+      case BM7701_00_1_API_ERROR:
+					
+        break;
+    }		
+  }
+}
+
+
 //蓝牙（串口0） 接收数据就绪函数
-void BLUETEETH_USART_Tx(const char* TxBuffer, u32 length)
+/*
+void BLUETEETH_USART_Tx(uint8_t *TxBuffer, uint8_t length)
 {
   int i;
  
   for (i = 0; i < length; i++)
   {
-    while (USART_GetFlagStatus(HT_USART0, USART_FLAG_TXC) == RESET); // 判断是否 发送完成
-    USART_SendData(HT_USART0, TxBuffer[i]);
+    while (USART_GetFlagStatus(HT_USART1, USART_FLAG_TXC) == RESET); // 判断是否 发送完成
+
+	BM7701_00_1_writeData( TxBuffer[i],length);  
     //while (USART_GetFlagStatus(HT_USARTx, USART_FLAG_TXDE) == RESET); // 判断是否 发送完成
   }
 }
-
+*/
 void GPS_To_BlueTooth(void)
 {
     if (Save_Data.isParseData && Save_Data.isUsefull)
 	{
 		//复位标志位
-			Save_Data.isUsefull = false;
+	  Save_Data.isUsefull = false;
       Save_Data.isParseData = false;
 
-    //发送数据
-    BLUETEETH_USART_Tx("Save_Data.UTCTime = ", 19);
-    BLUETEETH_USART_Tx(Save_Data.UTCTime, 11);
-    BLUETEETH_USART_Tx("\r\n", 2);
-    BLUETEETH_USART_Tx("Save_Data.latitude = ", 21);
-    BLUETEETH_USART_Tx(Save_Data.latitude, 11);
-    BLUETEETH_USART_Tx("\r\n", 2);
-    BLUETEETH_USART_Tx("Save_Data.N_S = ", 17);
-    BLUETEETH_USART_Tx(Save_Data.N_S, 2);
-    BLUETEETH_USART_Tx("\r\n", 2);
-    BLUETEETH_USART_Tx("Save_Data.longitude = ", 22);
-    BLUETEETH_USART_Tx(Save_Data.longitude, 12);
-    BLUETEETH_USART_Tx("\r\n", 2);
-    BLUETEETH_USART_Tx("Save_Data.E_W = ", 17);
-    BLUETEETH_USART_Tx(Save_Data.E_W, 2);
-    BLUETEETH_USART_Tx("\r\n", 2);
+	uint8_t buffer[64]; // 根据打包字段总长度估算
+    uint8_t index = 0;
 
+    // 拷贝字段到发送缓冲区
+    memcpy(&buffer[index], (uint8_t*)Save_Data.UTCTime, sizeof(Save_Data.UTCTime));
+    index += sizeof(Save_Data.UTCTime);
 
-		
-			
-		}	
+    memcpy(&buffer[index], (uint8_t*)Save_Data.latitude, sizeof(Save_Data.latitude));
+    index += sizeof(Save_Data.latitude);
+
+    memcpy(&buffer[index], (uint8_t*)Save_Data.N_S, sizeof(Save_Data.N_S));
+    index += sizeof(Save_Data.N_S);
+
+    memcpy(&buffer[index], (uint8_t*)Save_Data.longitude, sizeof(Save_Data.longitude));
+    index += sizeof(Save_Data.longitude);
+
+    memcpy(&buffer[index], (uint8_t*)Save_Data.E_W, sizeof(Save_Data.E_W));
+    index += sizeof(Save_Data.E_W);
+
+    buffer[index++] = Save_Data.isUsefull;
+
+    // 发送数据
+    BM7701_00_1_writeData(buffer, index);
+    }
+
 }
 
+//获取蓝牙状态
+uint8_t BM7701_00_1_bleProcess(void)
+{
+  uint8_t st = BM7701_00_1_API_ERROR;
+  uint8_t lenth = 0;
+  
+  BM7701_00_1_readData(receiveBuf, lenth);
+  switch (receiveBuf[1])
+    {
+      case 0x00:
+        if (receiveBuf[0] == 0x00)
+        {
+          if ((receiveBuf[3] & 0x01) == 0x01)
+          {
+            st = BM7701_00_1_API_CONNECTED;
 
+          }
+          else st = BM7701_00_1_API_DISCONNECTED;
 
+        }
+        break;
+      case 0xF2:
+        if ((receiveBuf[0] == 0x00) && (receiveBuf[2] == 0xFF))
+        {
+          st = BM7701_00_1_DATA_RECEIVED;
+        }
+        break;
+      default: break;
+    }
+  return st;
+}
+
+void blueteech_delay(vu32 count)
+{
+  count = SystemCoreClock / 8000 * count;
+  while(count--);
+}
 
 
 
