@@ -19,9 +19,9 @@ float pitch_kalman= 0;  	 	//pitch滤波后数据
 float roll_raw= 0;   		   	//横滚角roll原始数据
 float roll_kalman= 0;  		 	//roll滤波后数据					
 
-short  temp;        //温度
-short	gx,gy,gz;    //三轴加速度
-short ax,ay,az;    //三轴角速度
+int  temp;        //温度
+int	gx,gy,gz;    //三轴加速度
+int ax,ay,az;    //三轴角速度
 //判断数据接收是否正常
 uint8_t a_ret;
 uint8_t g_ret;
@@ -204,6 +204,8 @@ void Angle_Cal(void)
 	if(accel_z<32764) accz=accel_z/16384.0;//计算z轴加速度
 	else              accz=(accel_z-49152)/16384.0;
 	//加速度反正切公式计算三个轴和水平面坐标系之间的夹角
+	//BMS56M605_readAcceleration(&accx,&accy,&accz);
+	
 	pitch_raw=(atan(accx/accz))*180/3.14;
 	roll_raw=(atan(accy/accz))*180/3.14;
 	//判断计算后角度的正负号											
@@ -221,7 +223,7 @@ void Angle_Cal(void)
 	if(gyro_y>32768) gyro_y=+(65535-gyro_y)/16.4;
 	if(gyro_z<32768) gyro_z=-(gyro_z/16.4);
 	if(gyro_z>32768) gyro_z=+(65535-gyro_z)/16.4;
-
+//BMS56M605_readGyroscope(&gyro_x,&gyro_y,&gyro_z);
 	//4.调用卡尔曼函数
 	Kalman_Cal_Pitch(pitch_raw,gyro_x);  //卡尔曼滤波计算X倾角
 	Kalman_Cal_Roll(roll_raw,gyro_y);  //卡尔曼滤波计算Y倾角															  

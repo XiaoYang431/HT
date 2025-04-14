@@ -1,10 +1,10 @@
 #ifndef MOTOR_H
 #define MOTOR_H
 
-extern int16_t encder_left;
-extern int16_t encder_right;
- extern  int16_t Speed_left;
- extern int16_t Speed_right;
+extern int32_t encder_left;
+extern int32_t encder_right;
+ extern  int32_t Speed_left;
+ extern int32_t Speed_right;
 
 
 #define Motor_Left_up 0x01//正数为正转
@@ -94,8 +94,8 @@ void Motor_Run(uint8_t Motor_Nam,int8_t Speed);
 void Motor_Stop(uint8_t Motor_Nam);
 void Motor_shache(uint8_t Motor_Nam);
 void Motor_Get_decode_TMInit(void);
-int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right);
-int16_t velocity(int16_t Targrt_Speed,int16_t encoder_left,int16_t encoder_right);
+int32_t  PID_Turn(float gzro, int32_t encoder_left,int32_t encoder_right);
+int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right);
 uint8_t BMS56M605_init(void);
 int16_t Bizhnag_Start(void);
 

@@ -195,11 +195,11 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
 }
 
 
-int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right)
+int32_t  PID_Turn(float gzro, int32_t encoder_left,int32_t encoder_right)
 {
-   uint16_t Kp = 15, Kd = 5; //===PID参数
-    static int16_t bias = 0;
-	int16_t Turn_Amplitude=100, turn, encoder_temp;
+   int32_t Kp = 15, Kd = 5; //===PID参数
+    static int32_t bias = 0;
+	int32_t Turn_Amplitude=100, turn, encoder_temp;
 	
 	encoder_temp = encoder_left + encoder_right;
 	bias += encoder_temp; //对角速度积分
@@ -215,23 +215,33 @@ int16_t  PID_Turn(float gzro, int16_t encoder_left,int16_t encoder_right)
 	return turn;
 
 }
-int16_t velocity(int16_t Targrt_Speed,int16_t encoder_left,int16_t encoder_right)
+int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right)
 {  //Targrt_Speed单位是毫米
 	static float Velocity,Encoder_Least,Encoder =0;
    static float Encoder_last = 0;
 	static float Encoder_Integral=0;
-	float velocity_KP=-150;//-300;
-	float velocity_KI=-0;//-0.5;	
-   float velocity_KD=0.5;
-   int32_t Targrt= (Targrt_Speed/(200*3.14*65))*890;
-	Encoder_Least =(encoder_left-encoder_right)/2-Targrt;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
+	double velocity_KP=0.125;//-300;
+	double velocity_KI= 0.00075;//-0.5;	
+   float velocity_KD=0;
+   float Targrt= (Targrt_Speed/(200*3.14*65))*890;
+	Encoder_Least =(-encoder_left-encoder_right)/2-Targrt;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
 	Encoder *= 0.7;		                                                //===一阶低通滤波器       
 	Encoder += Encoder_Least*0.3;	                                    //===一阶低通滤波器    
 	Encoder_Integral +=Encoder;                                       //===积分出位移 积分时间：5ms                                     
-	if(Encoder_Integral>15000)  	Encoder_Integral=15000;             //===积分限幅
-	if(Encoder_Integral<-15000)		Encoder_Integral=-15000;            //===积分限幅	
+	if(Encoder_Integral>150)  	Encoder_Integral=150;             //===积分限幅
+	if(Encoder_Integral<-150)		Encoder_Integral=-150;            //===积分限幅	
 
-	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI+ velocity_KD*(Encoder-Encoder_last);        //===速度控制					
+	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI+ velocity_KD*(Encoder-Encoder_last);        //===速度控制
+	//Velocity = Velocity / 10;
+if(Velocity>100.0  )
+{
+	Velocity =100;
+
+}	
+else if( Velocity < -100)
+{
+	Velocity = -100;
+}
 	Encoder_last = Encoder;	//===上次速度值
  
    
@@ -271,12 +281,12 @@ int16_t Bizhnag_Start(void)
       if(BM32S2031_1_getIRStatus() == 1)
       {
       Turn = PID_Turn(0,0,0);
-       Velocity = velocity(0,0,0,0);
+       Velocity = velocity(0,0,0);
            // _BM32S2031_1_delay(1000);
       }
       else
       {
-          Velocity = velocity(0,0,0,0);
+          Velocity = velocity(0,0,0);
       }
       Speed_left = Velocity + Turn;
       Speed_right = Velocity - Turn;

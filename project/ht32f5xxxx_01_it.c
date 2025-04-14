@@ -29,8 +29,8 @@
 #include "ht32.h"
 #include "GPS.h"
 #include "Motor.h"
-int16_t   encder_left;
-int16_t   encder_right; 
+int32_t   encder_left;
+int32_t   encder_right; 
 /** @addtogroup Project_Template Project Template
   * @{
   */

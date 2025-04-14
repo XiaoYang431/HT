@@ -28,7 +28,7 @@ extern float roll_kalman; 		 //roll滤波后数据
 //extern float Angle_X_Final; 		//X最终倾斜角度
 //extern float Angle_Y_Final; 		//Y最终倾斜角度
 
-extern short temp;        //温度
+extern int temp;        //温度
 //extern short gx,gy,gz;    //三轴加速度
 //extern short ax,ay,az;    //三轴角速度
 //判断数据接收是否正常

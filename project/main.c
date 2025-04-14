@@ -1,7 +1,6 @@
 //-----------------------------------------------------------------------------
 #include "ht32.h"
 #include "ht32_board.h"
-
 #include "BMP73T104.h"
 #include "Bizhang.h"
 #include "Motor.h"
@@ -11,8 +10,8 @@
 //	  uint16_t b = 0;
 //  uint8_t c = 0;
 //	  uint8_t d = 0;
-int16_t Speed_left = 0,Speed_right = 0;
-int16_t Turn = 0,Velocity = 0;
+int32_t Speed_left = 0,Speed_right = 0;
+int32_t Turn = 0,Veloc = 0;
 int main(void)
 {
 
@@ -50,7 +49,10 @@ Set_Motor_decode2();
  Motor_Get_decode_TMInit();
 //初始化陀螺仪
  while(BMS56M605_init());
-
+//	  	  Motor_Run(Motor_Left_up,0);
+//	Motor_Run(Motor_Left_down,0);
+//	Motor_Run(Motor_Right_up,0);
+//	Motor_Run(Motor_Right_down,0);
 	while(1)
 	{
 
@@ -68,31 +70,36 @@ Set_Motor_decode2();
 				/*************************************近接感应模块*********************/
      		//卡尔曼滤波计算角度值
 	 Angle_Cal();
-	
-      if(BM32S2031_1_getIRStatus() == 1)
-      {
-      Turn = PID_Turn(gyro_z,encder_left,encder_right);
-       Velocity = velocity(1,encder_left,encder_right);
-           // _BM32S2031_1_delay(1000);
-      }
-      else
-      {
-          Velocity = velocity(1,encder_left,encder_right);
-      }
-      Speed_left = Velocity + Turn;
-      Speed_right = -(Velocity - Turn);
-	  Motor_Run(Motor_Left_up,Speed_left);
-	Motor_Run(Motor_Left_down,Speed_left);
-	Motor_Run(Motor_Right_up,Speed_right);
-	Motor_Run(Motor_Right_down, Speed_right);
-		Velocity = 0;
-		Turn = 0;
-	  _BMP73T104_delay(1000);
-	  	  Motor_Run(Motor_Left_up,Velocity);
-	Motor_Run(Motor_Left_down,Velocity);
-	Motor_Run(Motor_Right_up,-Velocity);
-	Motor_Run(Motor_Right_down,- Velocity);
-
+//	
+//      if(BM32S2031_1_getIRStatus() == 1)
+//      {
+//      Turn = PID_Turn(gyro_z,encder_left,encder_right);
+//       Velocity = velocity(1,encder_left,encder_right);
+//           // _BM32S2031_1_delay(1000);
+//      }
+//      else
+//      {
+//          Velocity = velocity(1,encder_left,encder_right);
+//      }
+//      Speed_left = Velocity + Turn;
+//      Speed_right = -(Velocity - Turn);
+//	  Motor_Run(Motor_Left_up,Speed_left);
+//	Motor_Run(Motor_Left_down,Speed_left);
+//	Motor_Run(Motor_Right_up,Speed_right);
+//	Motor_Run(Motor_Right_down, Speed_right);
+//		Velocity = 0;
+//		Turn = 0;
+//	  _BMP73T104_delay(1000);
+//	  	  Motor_Run(Motor_Left_up,Velocity);
+//	Motor_Run(Motor_Left_down,Velocity);
+//	Motor_Run(Motor_Right_up,-Velocity);
+//	Motor_Run(Motor_Right_down,- Velocity);
+//
+//Veloc = velocity(0,encder_left,encder_right);
+//	  	  Motor_Run(Motor_Left_up,Veloc);
+//	Motor_Run(Motor_Left_down,Veloc);
+//	Motor_Run(Motor_Right_up,-Veloc);
+//	Motor_Run(Motor_Right_down,- Veloc);
 	}
 
 }
