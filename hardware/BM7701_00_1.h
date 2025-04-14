@@ -42,6 +42,11 @@
 #include "middleware/uart_module.h"
 
 #define BM7701_00_1_SERIAL                            (1)
+	 
+#define TX_POWER     0x0F                   //TX Power
+#define XTAL_CLOAD   0x04                   //16MHz Crystal load
+#define ADV_MIN      100                    //AdvIntv min=100ms
+#define ADV_MAX      100                    //AdvIntv max=100ms	 
 /* Settings ------------------------------------------------------------------------------------------------*/
 /* Exported typedef ----------------------------------------------------------------------------------------*/
 typedef struct 
