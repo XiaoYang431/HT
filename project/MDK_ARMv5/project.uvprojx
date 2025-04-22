@@ -641,16 +641,6 @@
           <GroupName>hardware</GroupName>
           <Files>
             <File>
-              <FileName>Blueteeth.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\..\hardware\Blueteeth.c</FilePath>
-            </File>
-            <File>
-              <FileName>Blueteeth.h</FileName>
-              <FileType>5</FileType>
-              <FilePath>..\..\hardware\Blueteeth.h</FilePath>
-            </File>
-            <File>
               <FileName>PWM.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\..\hardware\PWM.c</FilePath>
@@ -739,6 +729,16 @@
               <FileName>Kaerman.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\hardware\Kaerman.h</FilePath>
+            </File>
+            <File>
+              <FileName>BM7701_00_1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\BM7701_00_1.c</FilePath>
+            </File>
+            <File>
+              <FileName>BM7701_00_1.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\BM7701_00_1.h</FilePath>
             </File>
           </Files>
         </Group>

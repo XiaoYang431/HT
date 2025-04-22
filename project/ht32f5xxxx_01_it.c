@@ -266,11 +266,14 @@ void BFTM0_IRQHandler(void)
   if(BFTM_GetFlagStatus(HT_BFTM0) == SET)
   {
     BFTM_ClearFlag(HT_BFTM0);
-     encder_left = HTCFG_CAP_PORT_decode1A->CNTR;//获取编码器计数值
-     encder_right = HTCFG_CAP_PORT_decode2A->CNTR;//获取编码器计数值
-     HTCFG_CAP_PORT_decode1A->CNTR = 0;//获取编码器计数值
-     HTCFG_CAP_PORT_decode2A->CNTR = 0;//获取编码器计数值
-    // Do something
+    // encder_left = HTCFG_CAP_PORT_decode1A->CNTR;//获取编码器计数值
+    // encder_right = HTCFG_CAP_PORT_decode2A->CNTR;//获取编码器计数值
+    // HTCFG_CAP_PORT_decode1A->CNTR = 0;//获取编码器计数值
+    // HTCFG_CAP_PORT_decode2A->CNTR = 0;//获取编码器计数值
+    //// Do something
+		Speed_left = PID_Turn( encder_left, encder_left,  1, 2);
+
+	  
   }
 }
 

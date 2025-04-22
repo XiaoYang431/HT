@@ -202,3 +202,24 @@ void CLR_Buf(void)                           // 串口缓存清理
 	memset(USART_RX_BUF, 0, USART_REC_LEN);      //清空
     point1 = 0;                    
 }
+// 计算方向向量的函数
+DirectionVector CalculateDirectionVector(_SaveData current, _SaveData target) {
+    // 将纬度和经度从字符串转换为浮点数
+    float currentLat = atof(current.latitude);
+    float currentLon = atof(current.longitude);
+    float targetLat = atof(target.latitude);
+    float targetLon = atof(target.longitude);
+
+    // 计算方向向量
+    DirectionVector vector;
+    vector.dx = targetLon - currentLon; // 经度方向
+    vector.dy = targetLat - currentLat; // 纬度方向
+
+    return vector;
+}
+
+void Delay_ms(vu32 count)
+{
+  count = SystemCoreClock / 8000 * count;
+  while(count--);
+}

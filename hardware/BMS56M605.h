@@ -40,13 +40,6 @@
 
 #include "middleware/i2c_master.h"
 
-#define BMS56M605_WIRE                              (0)
-	 
-#define   BMS56M605_INTPIN_GPIO        STRCAT2(P,            B)
-#define   BMS56M605_INTPIN_GPIO_ID     STRCAT2(GPIO_P,       B)
-#define   BMS56M605_INTPIN_AFIO_PIN    STRCAT2(AFIO_PIN_,    12)
-#define   BMS56M605_INTPIN_GPIO_PORT   STRCAT2(HT_GPIO,      B)
-#define   BMS56M605_INTPIN_GPIO_PIN    STRCAT2(GPIO_PIN_,    12)	 
 /* Settings ------------------------------------------------------------------------------------------------*/
 /* Exported typedef ----------------------------------------------------------------------------------------*/
 typedef enum {
@@ -55,6 +48,13 @@ typedef enum {
 } BMS56M605_selStatus;
 /* Exported constants --------------------------------------------------------------------------------------*/
 /* Exported macro ------------------------------------------------------------------------------------------*/
+
+#define BMS56M605_WIRE                    (1)                 
+#define   BMS56M605_INTPIN_GPIO        STRCAT2(P,            B)
+#define   BMS56M605_INTPIN_GPIO_ID     STRCAT2(GPIO_P,       B)
+#define   BMS56M605_INTPIN_AFIO_PIN    STRCAT2(AFIO_PIN_,    12)
+#define   BMS56M605_INTPIN_GPIO_PORT   STRCAT2(HT_GPIO,      B)
+#define   BMS56M605_INTPIN_GPIO_PIN    STRCAT2(GPIO_PIN_,    12)
 #define BMS56M605_MASTERADDR     0x68
 #define BMS56M605_CLKFREQ        100000
 
@@ -218,8 +218,6 @@ typedef enum {
 #define BMS56M605_REG_FIFO_COUNTL          0x73
 #define BMS56M605_REG_FIFO_R_W             0x74
 #define BMS56M605_REG_WHO_AM_I             0x75
-
-//#define BMS56M605_WIRE                     0x11
 /* Exported variables --------------------------------------------------------------------------------------*/
 /* Exported functions --------------------------------------------------------------------------------------*/
 BMS56M605_selStatus BMS56M605_selWire(uint32_t wire_number);

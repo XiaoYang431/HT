@@ -5,8 +5,10 @@ extern int32_t encder_left;
 extern int32_t encder_right;
  extern  int32_t Speed_left;
  extern int32_t Speed_right;
+ extern float  angle_error;
+  extern  float current_angle ;
 
-
+#include "BMS56M605.h"
 #define Motor_Left_up 0x01//正数为正转
 #define Motor_Left_down 0x02//正数为正转
 #define Motor_Right_up 0x04//负数为正转
@@ -94,10 +96,11 @@ void Motor_Run(uint8_t Motor_Nam,int8_t Speed);
 void Motor_Stop(uint8_t Motor_Nam);
 void Motor_shache(uint8_t Motor_Nam);
 void Motor_Get_decode_TMInit(void);
-int32_t  PID_Turn(float gzro, int32_t encoder_left,int32_t encoder_right);
+int32_t PID_Turn( int32_t encoder_left, int32_t encoder_right, float dx, float dy);
 int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right);
-uint8_t BMS56M605_init(void);
-int16_t Bizhnag_Start(void);
+uint8_t BMS56M605_my_init(void);
+//int16_t Bizhnag_Start(void);
+
 
 
 #endif

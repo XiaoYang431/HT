@@ -47,4 +47,7 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h ../../hardware\GPS.h \
   D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h \
-  ../../hardware\Motor.h
+  ../../hardware\Motor.h ../../hardware/BMS56M605.h \
+  ..\i2c_master_config.h ..\ht32_board_config.h \
+  ../../utilities\bmduino_board.h ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h

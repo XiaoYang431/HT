@@ -1,12 +1,16 @@
 #include "ht32f5xxxx_01.h"              // Device header
 #include "BMP73T104.h"
 #include "Motor.h"
-#include "BMS56M605.h"
+
 #include "Kaerman.h"
 #include "Bizhang.h"
+#include <math.h>
+#include <stdlib.h>
 //使用I2C_MASTER_CH1，引脚为PC4，PC5
 
-
+#define M_PI 3.14159265358979323846
+ float  angle_error = 5;
+ float current_angle  = 0;
 uint8_t Motor_Init(void)
 {
     /*
@@ -113,7 +117,7 @@ void Motor_Get_decode_TMInit(void)
     
     // 设置定时器计数器初值和比较值
     BFTM_SetCounter(HT_BFTM0, 0);
-    BFTM_SetCompare(HT_BFTM0, SystemCoreClock/200);  //5ms产生中断,及200Hz
+    BFTM_SetCompare(HT_BFTM0, SystemCoreClock/100);  //10ms产生中断,及200Hz
     
     // 清除中断标志位     
     BFTM_ClearFlag(HT_BFTM0);
@@ -195,25 +199,58 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
 }
 
 
-int32_t  PID_Turn(float gzro, int32_t encoder_left,int32_t encoder_right)
-{
-   int32_t Kp = 15, Kd = 5; //===PID参数
-    static int32_t bias = 0;
-	int32_t Turn_Amplitude=100, turn, encoder_temp;
-	
-	encoder_temp = encoder_left + encoder_right;
-	bias += encoder_temp; //对角速度积分
-	
-	//限幅
-	if(bias > Turn_Amplitude)  
-    	bias = Turn_Amplitude;
-	if(bias < -Turn_Amplitude) 
-		bias = -Turn_Amplitude;
-	
-	turn = Kp * bias + Kd * gzro; //===结合Z轴陀螺仪进行PD控制
-	
-	return turn;
 
+
+int32_t PID_Turn( int32_t encoder_left, int32_t encoder_right, float dx, float dy)
+{
+    float Kp = 500, Kd = 10;//2.5; // PID 参数
+    static int32_t bias = 0;
+    int32_t Turn_Amplitude = 100, turn, encoder_temp;
+ 
+	float gyro_z =  BMS56M605_readGyroscopeZ();
+	gyro_z = gyro_z*M_PI/180;
+	
+    // 计算目标角度（弧度）
+    float target_angle = atan2(dx, dy); // 目标方向向量的角度
+	
+    // 获取当前角度（假设 gzro 是角速度，单位为度/秒）
+     
+	//if((encoder_right != 0) || (encoder_left != 0))
+	//如果误差过小，则不会进行积分，结束本次转向
+	 current_angle += -gyro_z * 0.005;   // 假设控制周期为 10ms
+
+    // 计算角度偏差
+      angle_error = target_angle - current_angle;
+	
+    // 将角度偏差转换为 [-π, π] 范围
+    if (angle_error > M_PI)
+        angle_error -= 2 * M_PI;
+    if (angle_error < -M_PI)
+        angle_error += 2 * M_PI;
+
+    // 对角速度积分
+    encoder_temp = encoder_left + encoder_right;
+    bias += encoder_temp;
+
+    // 限幅
+    if (bias > Turn_Amplitude)
+        bias = Turn_Amplitude;
+    if (bias < -Turn_Amplitude)
+        bias = -Turn_Amplitude;
+
+    // PID 控制计算转向值
+    turn = Kp * angle_error + Kd * gyro_z;
+
+    // 限幅转向值
+    if (turn > Turn_Amplitude)
+        turn = Turn_Amplitude;
+    if (turn < -Turn_Amplitude)
+        turn = -Turn_Amplitude;
+
+
+	 return turn; // 返回转向值，用于调整左右轮速度
+	
+   
 }
 int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right)
 {  //Targrt_Speed单位是毫米
@@ -247,12 +284,13 @@ else if( Velocity < -100)
    
    return Velocity;
 }
-uint8_t BMS56M605_init(void)
+uint8_t BMS56M605_my_init(void)
 {
-    BMS56M605_selWire(I2C_MASTER_CH1);
+    //if(BMS56M605_selWire(I2C_MASTER_CH1) == BMS56M605_FAILURE)
+	//	return 1;
 
    BMS56M605_Init();
-    BMS56M605_reset();
+     BMS56M605_reset();
      //BMS56M605_enableCycle(1);
 BMS56M605_setGyroRange(BMS56M605_GYRO_RANGE_2000);
 BMS56M605_setAccelerometerRange(BMS56M605_ACC_RANGE_2G);
@@ -261,7 +299,8 @@ BMS56M605_setAccelerometerRange(BMS56M605_ACC_RANGE_2G);
 BMS56M605_setFilterBandwidth(BMS56M605_ACC_96HZ_GYRO_98HZ);
 BMS56M605_writeReg(BMS56M605_REG_USER_CTRL,0X00);	//I2C主模式关闭
 	BMS56M605_writeReg(BMS56M605_REG_FIFO_EN,0X00);	//开启FIFO
-	BMS56M605_writeReg(BMS56M605_REG_INT_PIN_CFG,0X80);	//INT引脚低电平有效
+	
+	
 	uint8_t res = 0;
    res = BMS56M605_readReg(BMS56M605_REG_WHO_AM_I); 
 	if(res==0X68)//器件ID正确
@@ -271,24 +310,27 @@ BMS56M605_writeReg(BMS56M605_REG_USER_CTRL,0X00);	//I2C主模式关闭
    BMS56M605_setSampleRateDivisor(1000/200-1);
    BMS56M605_setFilterBandwidth(BMS56M605_ACC_96HZ_GYRO_98HZ);
  	}else return 1;
+	BMS56M605_writeReg(BMS56M605_REG_INT_PIN_CFG,0X80);	//INT引脚低电平有效
+	BMS56M605_writeReg(BMS56M605_REG_INT_ENABLE,0X01);
 	return 0;
 }
   
 
-int16_t Bizhnag_Start(void)
-{
-   int16_t Turn = 0,Velocity = 0;
-      if(BM32S2031_1_getIRStatus() == 1)
-      {
-      Turn = PID_Turn(0,0,0);
-       Velocity = velocity(0,0,0);
-           // _BM32S2031_1_delay(1000);
-      }
-      else
-      {
-          Velocity = velocity(0,0,0);
-      }
-      Speed_left = Velocity + Turn;
-      Speed_right = Velocity - Turn;
-}
+//int16_t Bizhnag_Start(void)
+//{
+//   int16_t Turn = 0,Velocity = 0;
+//      if(BM32S2031_1_getIRStatus() == 1)
+//      {
+//      Turn = PID_Turn(0,0,0);
+//       Velocity = velocity(0,0,0);
+//           // _BM32S2031_1_delay(1000);
+//      }
+//      else
+//      {
+//          Velocity = velocity(0,0,0);
+//      }
+//      Speed_left = Velocity + Turn;
+//      Speed_right = Velocity - Turn;
+//}
+
 

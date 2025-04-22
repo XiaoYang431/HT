@@ -1,4 +1,6 @@
-./ht32/52352/main.o: ../main.c ../../library/HT32F5xxxx_Driver/inc\ht32.h \
+./ht32/52352/bm7701_00_1.o: ../../hardware/BM7701_00_1.c \
+  ../../hardware/BM7701_00_1.h \
+  ../../library/HT32F5xxxx_Driver/inc\ht32.h \
   ../../library/Device/Holtek/HT32F5xxxx/Include\ht32f5xxxx_01.h \
   ../../library/HT32F5xxxx_Driver/inc\ht32_config.h \
   ../../library/CMSIS/Include\core_cm0plus.h \
@@ -44,15 +46,8 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_cm0plus_misc.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
-  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
-  ../../utilities\ht32_board.h \
-  ../../utilities/HT32_Board/bm53a367a_dvb.h \
-  ../../utilities\common/i2c_eeprom.h ../../utilities\common/spi_flash.h \
-  ../../utilities\common/spi_lcd.h ../../utilities\common/lcd.h \
-  ../../utilities\common/ebi_lcd.h ../../hardware\BMP73T104.h \
-  ..\i2c_master_config.h ..\ht32_board_config.h \
-  ../../utilities\bmduino_board.h ../../utilities\bmduino_check.h \
-  ../../utilities\middleware/i2c_master.h ../../hardware\Bizhang.h \
-  ../../hardware\Motor.h ../../hardware/BMS56M605.h \
-  ../../hardware\Kaerman.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\math.h
+  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h ..\i2c_master_config.h \
+  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
+  ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h \
+  ../../utilities\middleware/uart_module.h

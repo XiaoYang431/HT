@@ -44,6 +44,10 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_cm0plus_misc.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
-  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
-  ../../hardware/Blueteeth.h ../../hardware/GPS.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h
+  ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h ../../hardware/GPS.h \
+  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h \
+  ../../hardware/BM7701_00_1.h ..\i2c_master_config.h \
+  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
+  ../../utilities\bmduino_check.h \
+  ../../utilities\middleware/i2c_master.h \
+  ../../utilities\middleware/uart_module.h

@@ -51,4 +51,5 @@
   ../../utilities\middleware/i2c_master.h ../../hardware/Motor.h \
   ../../hardware/BMS56M605.h ../../hardware/Kaerman.h \
   D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\math.h \
-  ../../hardware/Bizhang.h
+  ../../hardware/Bizhang.h \
+  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\stdlib.h
