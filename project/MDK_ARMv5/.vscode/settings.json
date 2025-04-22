@@ -5,6 +5,8 @@
         "bmduino_check.h": "c",
         "ht32_board_config.h": "c",
         "ht32.h": "c",
-        "compare": "c"
+        "compare": "c",
+        "motor.h": "c",
+        "bizhang.h": "c"
     }
 }

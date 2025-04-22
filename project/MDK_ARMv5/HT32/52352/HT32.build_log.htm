@@ -26,8 +26,338 @@ Project File Date:  04/14/2025
 
 <h2>Output:</h2>
 *** Using Compiler 'V6.7', folder: 'D:\stm32 application\ARM\ARMCLANG\Bin'
-Build target 'HT32'
-".\HT32\52352\HT32.axf" - 0 Error(s), 0 Warning(s).
+Rebuild target 'HT32'
+assembling ht32_op.s...
+compiling spi_flash.c...
+assembling startup_ht32f5xxxx_03.s...
+compiling ht32_retarget.c...
+compiling main.c...
+../ht32f5xxxx_01_it.c(274): error: too many arguments to function call, expected 2, have 4
+                Speed_left = PID_Turn( encder_left, encder_left,  1, 2);
+                             ~~~~~~~~                             ^~~~
+../../hardware\Motor.h(99): note: 'PID_Turn' declared here
+int32_t PID_Turn(float dx, float dy);
+^
+1 error generated.
+compiling ht32f5xxxx_01_it.c...
+compiling ring_buffer.c...
+compiling system_ht32f5xxxx_03.c...
+compiling ht32_board.c...
+compiling i2c_master.c...
+compiling spi_lcd.c...
+compiling uart_module.c...
+compiling ht32_serial.c...
+compiling ht32f5xxxx_adc.c...
+compiling ht32_cm0plus_misc.c...
+compiling ht32f5xxxx_dac.c...
+compiling ht32f5xxxx_bftm.c...
+compiling ht32f5xxxx_ckcu.c...
+compiling ht32f5xxxx_ebi.c...
+compiling ht32f5xxxx_cmp.c...
+compiling ht32f5xxxx_exti.c...
+compiling ht32f5xxxx_crc.c...
+compiling ht32f5xxxx_flash.c...
+compiling ht32f5xxxx_pdma.c...
+compiling ht32f5xxxx_gpio.c...
+compiling ht32f5xxxx_i2c.c...
+compiling ht32f5xxxx_i2s.c...
+compiling ht32f5xxxx_pwrcu.c...
+compiling ht32f5xxxx_mctm.c...
+compiling ht32f5xxxx_wdt.c...
+compiling ht32f5xxxx_usbd.c...
+compiling ht32f5xxxx_sci.c...
+compiling ht32f5xxxx_tm.c...
+compiling ht32f5xxxx_rstcu.c...
+compiling ht32f5xxxx_spi.c...
+compiling ht32f5xxxx_rtc.c...
+compiling PWM.c...
+../../hardware/SIM900A.c(42): warning: implicit declaration of function 'Delay_ms' is invalid in C99 [-Wimplicit-function-declaration]
+                Delay_ms(10);
+                ^
+../../hardware/SIM900A.c(141): warning: passing 'char [5]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                               ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(29): note: expanded from macro 'SIM900A_SEND_AT'
+#define         SIM900A_SEND_AT                                                 "AT\r\n"
+                                                                                ^~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(141): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                                               ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(153): warning: passing 'char [5]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);
+                               ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(29): note: expanded from macro 'SIM900A_SEND_AT'
+#define         SIM900A_SEND_AT                                                 "AT\r\n"
+                                                                                ^~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(153): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);
+                                               ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(160): warning: passing 'char [12]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_SMS_FORMAT,"OK",30);      
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(31): note: expanded from macro 'SIM900A_SELECT_SMS_FORMAT'
+#define         SIM900A_SELECT_SMS_FORMAT                               "AT+CMGF=1\r\n"                 
+                                                                        ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(160): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_SMS_FORMAT,"OK",30);      
+                                                         ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(168): warning: passing 'char [12]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+                ack = sim900a_send_cmd(SIM900A_SELECT_SMS_FORMAT,"OK",30);      
+                                       ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(31): note: expanded from macro 'SIM900A_SELECT_SMS_FORMAT'
+#define         SIM900A_SELECT_SMS_FORMAT                               "AT+CMGF=1\r\n"                 
+                                                                        ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(168): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+                ack = sim900a_send_cmd(SIM900A_SELECT_SMS_FORMAT,"OK",30);      
+                                                                 ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(178): warning: passing 'char [17]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_TE_FONT,"OK",30); 
+                               ^~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(33): note: expanded from macro 'SIM900A_SELECT_TE_FONT'
+#define         SIM900A_SELECT_TE_FONT                                  "AT+CSCS=\"UCS2\"\r\n"
+                                                                        ^~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(178): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_TE_FONT,"OK",30); 
+                                                      ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(186): warning: passing 'char [17]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_TE_FONT,"OK",30); 
+                               ^~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(33): note: expanded from macro 'SIM900A_SELECT_TE_FONT'
+#define         SIM900A_SELECT_TE_FONT                                  "AT+CSCS=\"UCS2\"\r\n"
+                                                                        ^~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(186): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SELECT_TE_FONT,"OK",30); 
+                                                      ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(196): warning: passing 'char [11]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SAVE_SMS_SET,NULL,0);    
+                               ^~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(35): note: expanded from macro 'SIM900A_SAVE_SMS_SET'
+#define         SIM900A_SAVE_SMS_SET                                    "AT+CSCA?\r\n"
+                                                                        ^~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(204): warning: passing 'char [11]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SAVE_SMS_SET,NULL,0);    
+                               ^~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(35): note: expanded from macro 'SIM900A_SAVE_SMS_SET'
+#define         SIM900A_SAVE_SMS_SET                                    "AT+CSCA?\r\n"
+                                                                        ^~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(212): warning: passing 'char [22]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SET_SMS_TEST_MODE,"OK",30);      
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(37): note: expanded from macro 'SIM900A_SET_SMS_TEST_MODE'
+#define         SIM900A_SET_SMS_TEST_MODE                               "AT+CSMP=17,167,0,25\r\n"
+                                                                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(212): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SET_SMS_TEST_MODE,"OK",30);      
+                                                         ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(220): warning: passing 'char [22]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SET_SMS_TEST_MODE,"OK",30);      
+                               ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(37): note: expanded from macro 'SIM900A_SET_SMS_TEST_MODE'
+#define         SIM900A_SET_SMS_TEST_MODE                               "AT+CSMP=17,167,0,25\r\n"
+                                                                        ^~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(220): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SET_SMS_TEST_MODE,"OK",30);      
+                                                         ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(227): warning: passing 'uint8_t [96]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+        ASCII_TO_Unicode(PHONE_NUMBER,&sim900a_send_buffer[strlen(sim900a_send_buffer)]);
+                                                                  ^~~~~~~~~~~~~~~~~~~
+D:\stm32 application\ARM\ARMCLANG\Bin\..\include\string.h(335): note: passing argument to parameter here
+extern _ARMABI size_t strlen(const char * /*s*/) __attribute__((__nonnull__(1)));
+                                               ^
+../../hardware/SIM900A.c(227): warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+        ASCII_TO_Unicode(PHONE_NUMBER,&sim900a_send_buffer[strlen(sim900a_send_buffer)]);
+                                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(107): note: passing argument to parameter 'Unicode' here
+void ASCII_TO_Unicode(char *ASCII,char *Unicode)
+                                        ^
+../../hardware/SIM900A.c(232): warning: passing 'char [2]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(sim900a_send_buffer,">",100);    
+                                                   ^~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(240): warning: passing 'char [2]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(sim900a_send_buffer,">",100);    
+                                                   ^~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(258): warning: passing 'uint8_t [96]' to parameter of type 'const char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+                ASCII_TO_Unicode((char *)verification_code,&sim900a_send_buffer[strlen(sim900a_send_buffer)]);
+                                                                                       ^~~~~~~~~~~~~~~~~~~
+D:\stm32 application\ARM\ARMCLANG\Bin\..\include\string.h(335): note: passing argument to parameter here
+extern _ARMABI size_t strlen(const char * /*s*/) __attribute__((__nonnull__(1)));
+                                               ^
+../../hardware/SIM900A.c(258): warning: passing 'uint8_t *' (aka 'unsigned char *') to parameter of type 'char *' converts between pointers to integer types with different sign [-Wpointer-sign]
+                ASCII_TO_Unicode((char *)verification_code,&sim900a_send_buffer[strlen(sim900a_send_buffer)]);
+                                                           ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../../hardware/SIM900A.c(107): note: passing argument to parameter 'Unicode' here
+void ASCII_TO_Unicode(char *ASCII,char *Unicode)
+                                        ^
+../../hardware/SIM900A.c(263): warning: passing 'char [2]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(sim900a_send_buffer,">",300);    
+                                                   ^~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(271): warning: passing 'char [2]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(sim900a_send_buffer,">",300);    
+                                                   ^~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(276): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+                ack = sim900a_send_end(0x1a,"OK",800);
+                                            ^~~~
+../../hardware/SIM900A.c(61): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_end(uint8_t data,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(339): warning: passing 'char [5]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                               ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(29): note: expanded from macro 'SIM900A_SEND_AT'
+#define         SIM900A_SEND_AT                                                 "AT\r\n"
+                                                                                ^~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(339): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                                               ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+../../hardware/SIM900A.c(348): warning: passing 'char [5]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                               ^~~~~~~~~~~~~~~
+../../hardware/SIM900A.h(29): note: expanded from macro 'SIM900A_SEND_AT'
+#define         SIM900A_SEND_AT                                                 "AT\r\n"
+                                                                                ^~~~~~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'str' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                  ^
+../../hardware/SIM900A.c(348): warning: passing 'char [3]' to parameter of type 'uint8_t *' (aka 'unsigned char *') converts between pointers to integer types with different sign [-Wpointer-sign]
+        ack = sim900a_send_cmd(SIM900A_SEND_AT,"OK",30);        
+                                               ^~~~
+../../hardware/SIM900A.c(33): note: passing argument to parameter 'ack' here
+uint8_t sim900a_send_cmd(uint8_t *str,uint8_t *ack,uint16_t time)
+                                               ^
+32 warnings generated.
+compiling SIM900A.c...
+compiling ht32f5xxxx_usart.c...
+compiling BM32S2031_1.c...
+../../hardware/GPS.c(66): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                printf(Save_Data.GPS_Buffer);
+                       ^~~~~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(66): note: treat the string as an argument to avoid this
+                printf(Save_Data.GPS_Buffer);
+                       ^
+                       "%s", 
+../../hardware/GPS.c(120): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                printf(Save_Data.UTCTime);
+                       ^~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(120): note: treat the string as an argument to avoid this
+                printf(Save_Data.UTCTime);
+                       ^
+                       "%s", 
+../../hardware/GPS.c(127): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.latitude);
+                               ^~~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(127): note: treat the string as an argument to avoid this
+                        printf(Save_Data.latitude);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(132): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.N_S);
+                               ^~~~~~~~~~~~~
+../../hardware/GPS.c(132): note: treat the string as an argument to avoid this
+                        printf(Save_Data.N_S);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(136): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.longitude);
+                               ^~~~~~~~~~~~~~~~~~~
+../../hardware/GPS.c(136): note: treat the string as an argument to avoid this
+                        printf(Save_Data.longitude);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(140): warning: format string is not a string literal (potentially insecure) [-Wformat-security]
+                        printf(Save_Data.E_W);
+                               ^~~~~~~~~~~~~
+../../hardware/GPS.c(140): note: treat the string as an argument to avoid this
+                        printf(Save_Data.E_W);
+                               ^
+                               "%s", 
+../../hardware/GPS.c(208): warning: implicit declaration of function 'atof' is invalid in C99 [-Wimplicit-function-declaration]
+    float currentLat = atof(current.latitude);
+                       ^
+7 warnings generated.
+compiling GPS.c...
+compiling BMP73T104.c...
+compiling Motor.c...
+compiling Kaerman.c...
+compiling BMS56M605.c...
+compiling ht32_usbd_core.c...
+compiling i2c_eeprom.c...
+compiling ht32f5xxxx_aes.c...
+compiling ht32f5xxxx_div.c...
+compiling Bizhnag.c...
+compiling BM7701_00_1.c...
+".\HT32\52352\HT32.axf" - 1 Error(s), 39 Warning(s).
 
 <h2>Software Packages used:</h2>
 
@@ -41,7 +371,8 @@ Package Vendor: Holtek
   D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:01
+Target not created.
+Build Time Elapsed:  00:00:56
 </pre>
 </body>
 </html>

@@ -6,7 +6,7 @@
  uint16_t point1 = 0;
  char USART_RX_BUF[USART_REC_LEN];
  _SaveData Save_Data = {0};
-
+DirectionVector Dis = {0};
 void GPS_Init(void)
 {
      // Step 1: Enable peripheral clocks for GPIO and UART
@@ -203,7 +203,7 @@ void CLR_Buf(void)                           // 串口缓存清理
     point1 = 0;                    
 }
 // 计算方向向量的函数
-DirectionVector CalculateDirectionVector(_SaveData current, _SaveData target) {
+void CalculateDirectionVector(_SaveData current, _SaveData target) {
     // 将纬度和经度从字符串转换为浮点数
     float currentLat = atof(current.latitude);
     float currentLon = atof(current.longitude);
@@ -211,11 +211,10 @@ DirectionVector CalculateDirectionVector(_SaveData current, _SaveData target) {
     float targetLon = atof(target.longitude);
 
     // 计算方向向量
-    DirectionVector vector;
-    vector.dx = targetLon - currentLon; // 经度方向
-    vector.dy = targetLat - currentLat; // 纬度方向
-
-    return vector;
+    Dis.dx = targetLon - currentLon; // 经度方向
+    Dis.dy = targetLat - currentLat; // 纬度方向
+	Dis.isValid = 1; // 设置为有效
+   
 }
 
 void Delay_ms(vu32 count)

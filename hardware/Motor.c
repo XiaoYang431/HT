@@ -1,12 +1,10 @@
 #include "ht32f5xxxx_01.h"              // Device header
 #include "BMP73T104.h"
 #include "Motor.h"
-
 #include "Kaerman.h"
 #include "Bizhang.h"
 #include <math.h>
 #include <stdlib.h>
-//使用I2C_MASTER_CH1，引脚为PC4，PC5
 
 #define M_PI 3.14159265358979323846
  float  angle_error = 5;
@@ -201,7 +199,7 @@ TM_TimeBaseInitTypeDef TimeBaseIniture;         //结构体
 
 
 
-int32_t PID_Turn( int32_t encoder_left, int32_t encoder_right, float dx, float dy)
+int32_t PID_Turn(float dx, float dy)
 {
     float Kp = 500, Kd = 10;//2.5; // PID 参数
     static int32_t bias = 0;
@@ -227,16 +225,6 @@ int32_t PID_Turn( int32_t encoder_left, int32_t encoder_right, float dx, float d
         angle_error -= 2 * M_PI;
     if (angle_error < -M_PI)
         angle_error += 2 * M_PI;
-
-    // 对角速度积分
-    encoder_temp = encoder_left + encoder_right;
-    bias += encoder_temp;
-
-    // 限幅
-    if (bias > Turn_Amplitude)
-        bias = Turn_Amplitude;
-    if (bias < -Turn_Amplitude)
-        bias = -Turn_Amplitude;
 
     // PID 控制计算转向值
     turn = Kp * angle_error + Kd * gyro_z;
@@ -332,5 +320,29 @@ BMS56M605_writeReg(BMS56M605_REG_USER_CTRL,0X00);	//I2C主模式关闭
 //      Speed_left = Velocity + Turn;
 //      Speed_right = Velocity - Turn;
 //}
+//初始化一个GPIO口用来检测陀螺仪的INT引脚
+void INt_Get_Gyro_Init(void)
+{
+    { /* Enable peripheral clock                                                                              */
+    CKCU_PeripClockConfig_TypeDef CKCUClock = {{ 0 }};
+    CKCUClock.Bit.AFIO = 1;
+    CKCUClock.Bit.PB = 1;
+    CKCU_PeripClockConfig(CKCUClock, ENABLE);
+  }
 
+  { /* Configure GPIO as input mode                                                                         */
 
+    /* Configure AFIO mode as GPIO                                                                          */
+    AFIO_GPxConfig(GPIO_PB, AFIO_PIN_5, AFIO_FUN_GPIO);
+
+    /* Configure GPIO pull resistor                                                                         */
+    GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
+
+    /* Configure GPIO direction as input                                                                    */
+    GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_5, GPIO_DIR_IN);
+
+    /* Enable input function for read                                                                       */
+    GPIO_InputConfig(HT_GPIOB, GPIO_PIN_5, ENABLE);
+  }
+
+}

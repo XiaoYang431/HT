@@ -6,6 +6,7 @@
 #include "Motor.h"
 #include "Kaerman.h"
 #include <math.h>
+#include "GPS.h"
 //-----------------------------------------------------------------------------
 //  uint8_t a = 0;
 //	  uint16_t b = 0;
@@ -44,6 +45,8 @@ RETARGET_Configuration();
 
 BMS56M605_my_init();
 Motor_Init();
+INt_Get_Gyro_Init();
+
 //初始化编码器
 //Set_Motor_decode1();
 //Set_Motor_decode2();
@@ -57,74 +60,79 @@ Motor_Init();
 
 //  	  Motor_Run(Motor_Left_up,0);
 //Motor_Run(Motor_Left_down,00);
-{ /* Enable peripheral clock                                                                              */
-    CKCU_PeripClockConfig_TypeDef CKCUClock = {{ 0 }};
-    CKCUClock.Bit.AFIO = 1;
-    CKCUClock.Bit.PB = 1;
-    CKCU_PeripClockConfig(CKCUClock, ENABLE);
-  }
 
-  { /* Configure GPIO as input mode                                                                         */
-
-    /* Configure AFIO mode as GPIO                                                                          */
-    AFIO_GPxConfig(GPIO_PB, AFIO_PIN_5, AFIO_FUN_GPIO);
-
-    /* Configure GPIO pull resistor                                                                         */
-    GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
-
-    /* Configure GPIO direction as input                                                                    */
-    GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_5, GPIO_DIR_IN);
-
-    /* Enable input function for read                                                                       */
-    GPIO_InputConfig(HT_GPIOB, GPIO_PIN_5, ENABLE);
-  }
-  BMS56M605_getEvent();
   
-           Motor_Run(Motor_Left_up,+80);
-	Motor_Run(Motor_Left_down,-70);
-	Motor_Run(Motor_Right_up,+70);
-	Motor_Run(Motor_Right_down,-70);
-		   _BMP73T104_delay(1000);
-  
-           Motor_Run(Motor_Left_up,+0);
-	Motor_Run(Motor_Left_down,-0);
-	Motor_Run(Motor_Right_up,+0);
-	Motor_Run(Motor_Right_down,-0);
+
 
 	while(1)
 	{
-
+		static uint8_t jishu = 0;
+		
 	//Turn	= PID_Turn( encder_left, encder_left,  1, 2);
-//if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
-//{
-//	if(fabs(angle_error) < 0.052)
-//	{
-//		 Speed_Turn = 0;
-//		current_angle = 0;
-//		
-//	}
-//	else
-//	{
-//		 Speed_Turn =  PID_Turn( encder_left, encder_left,  1, 2);
-//	}
-//
-//	 Motor_Run(Motor_Left_up,+Speed_left);
-//	Motor_Run(Motor_Left_down,-Speed_left);
-//	Motor_Run(Motor_Right_up,+Speed_left);
-//	Motor_Run(Motor_Right_down,-Speed_left);
-//	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
-//
-//}
-//if(BM32S2031_1_getIRStatus() == 1)
- //     {
+	if(BM32S2031_1_getIRStatus() == 1)
+     {
+		//进行避障，在这个过程中，小车只会转向，不会前进
+		jishu 	++;
+           Motor_Run(Motor_Left_up,+80);
+	Motor_Run(Motor_Left_down,-80);
+	Motor_Run(Motor_Right_up,+80);
+	Motor_Run(Motor_Right_down,-80);
+		   _BMP73T104_delay(1000);
+  
+           Motor_Run(Motor_Left_up,+60);
+	Motor_Run(Motor_Left_down,+60);
+	Motor_Run(Motor_Right_up,-60);
+	Motor_Run(Motor_Right_down,-60);
+    _BMP73T104_delay(500);
+//将小车转回去
+           Motor_Run(Motor_Left_up,-80);
+	Motor_Run(Motor_Left_down,+80);
+	Motor_Run(Motor_Right_up,-80);
+	Motor_Run(Motor_Right_down,+80);
+		   _BMP73T104_delay(1000);
 
-//          Motor_Run(Motor_Left_up,+80);
-//	Motor_Run(Motor_Left_down,-80);
-//	Motor_Run(Motor_Right_up,+80);
-//	Motor_Run(Motor_Right_down,-80);
-//		   _BMP73T104_delay(1000);
+
+	
 		   
-//      }
+     }
+	 else
+	 {
+		if(jishu != 0)
+		{
+			jishu = 0;
+			//这里要重新计算目标与现在的方向
+	      CalculateDirectionVector(Save_Data,  target) ;
+
+		}
+		if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
+     {
+		if(Dis.isValid)
+		{
+			// 判断是否到达目标转向角度
+			
+				if(fabs(angle_error) < 0.052)
+			{
+		//已经到达目标转向，停止转向，并重新初始化
+		 Speed_Turn = 0;
+		current_angle = 0;
+		Dis.isValid = 0;
+			}
+				else
+			{
+			 Speed_Turn =  PID_Turn(1, 2);//dx,dy
+			}
+	 }
+
+	 Motor_Run(Motor_Left_up,+Speed_Turn);
+	Motor_Run(Motor_Left_down,-Speed_Turn);
+	Motor_Run(Motor_Right_up,+Speed_Turn);
+	Motor_Run(Motor_Right_down,-Speed_Turn);
+	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
+
+}
+	 }
+
+
      
 
 		//BMP73T104_dcMotorRun(BMP73T104_MOTOR1,70);
