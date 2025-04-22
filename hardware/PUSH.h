@@ -4,7 +4,7 @@
  u32 HX711_Read(void);
  void Get_human(void);
  void Get_Weight(void);
- void BFTM_Config(void);
+ void BFTM1_Config(void);
  void Check_Force(void);
  
 #endif

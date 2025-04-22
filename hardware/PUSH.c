@@ -1,6 +1,6 @@
 #include "ht32.h"
-#include "delay.h"
-
+#include "Send_ForceAlert.h"
+void push_delay_us(vu32 count);
 #define HX711_SCK   (1 << 0)  //  GPIOB Pin 0
 #define HX711_DOUT  (1 << 1)  //  GPIOB Pin 1
 
@@ -10,7 +10,7 @@ s32 Weight_Shiwu; //实际拉力值
 u8 Flag_Error = 0;
 
 #define GapValue 430  //校准参数
-#define THRESHOLD 5000 //触发中断的拉力阈值
+#define THRESHOLD 20 //触发中断的拉力阈值，单位：N
 
 //配置压力传感器引脚
 void Init_HX711pin(void)
@@ -32,7 +32,7 @@ u32 HX711_Read(void)
     unsigned char i;
 
     GPIO_ClearOutBits(HT_GPIOB, HX711_SCK);
-    Delay_us(1);
+    push_delay_us(1);
 
     while (GPIO_ReadInBit(HT_GPIOB, HX711_DOUT));
 
@@ -40,16 +40,16 @@ u32 HX711_Read(void)
 	{
         GPIO_SetOutBits(HT_GPIOB, HX711_SCK);
         count = count << 1;
-        Delay_us(1);
+        push_delay_us(1);
         GPIO_ClearOutBits(HT_GPIOB, HX711_SCK);
         if (GPIO_ReadInBit(HT_GPIOB, HX711_DOUT))
             count++;
-        Delay_us(1);
+        push_delay_us(1);
     }
 
     GPIO_SetOutBits(HT_GPIOB, HX711_SCK);
     count = count ^ 0x800000;
-    Delay_us(1);
+    push_delay_us(1);
     GPIO_ClearOutBits(HT_GPIOB, HX711_SCK);
 
     return count;
@@ -73,44 +73,59 @@ void Get_Weight(void)
 }
 
 //配置定时器
-void BFTM_Config(void) 
+void BFTM1_Config(void) 
 {
-    //使能BFTM0时钟
+    //使能BFTM1时钟
     CKCU_PeripClockConfig_TypeDef CKCUClock = {{0}};
-    CKCUClock.Bit.BFTM0 = 1;
+    CKCUClock.Bit.BFTM1 = 1;
     CKCU_PeripClockConfig(CKCUClock, ENABLE);
 
     //配置定时周期，10ms触发一次中断
     uint32_t timer_clk = SystemCoreClock / 1000;  // 72MHz / 1000 = 72kHz
-    uint32_t reload = (timer_clk * 10) - 1;       // 10ms ??????
+    uint32_t reload = (timer_clk * 10) - 1;       // 10ms 触发一次中断
 
-    //配置BFTM0定时器
-    BFTM_SetCounter(HT_BFTM0, 0);
-    BFTM_SetCompare(HT_BFTM0, reload);
-    BFTM_IntConfig(HT_BFTM0, ENABLE);
-    NVIC_EnableIRQ(BFTM0_IRQn);
+    //配置BFTM1定时器
+    BFTM_SetCounter(HT_BFTM1, 0);
+    BFTM_SetCompare(HT_BFTM1, reload);
+    BFTM_IntConfig(HT_BFTM1, ENABLE);
+    NVIC_EnableIRQ(BFTM1_IRQn);
 
-    //启动BFTM0定时器
-    BFTM_EnaCmd(HT_BFTM0, ENABLE);
+    //启动BFTM1定时器
+    BFTM_EnaCmd(HT_BFTM1, ENABLE);
 }
 
 //检查拉力传感器是否达到拉力上限
 void Check_Force(void) 
 {
-    int32_t weight = HX711_Read();
-    if (weight > THRESHOLD) 
+    static u8 alert_sent = 0;
+    Get_Weight();
+    
+    if (Weight_Shiwu > THRESHOLD) 
     {
-        //报警相关代码       
+        if(!alert_sent)
+        {
+            alert_sent = 1;
+            SendForceAlert(Weight_Shiwu);  //达到上限就报警，同时发短信/打电话给手机，同时小车停止运动
+        }
+    }
+    else 
+    {
+        alert_sent = 0;  // 清除标志
     }
 }
 
-//定时器BFTM0中断服务函数
-void BFTM0_IRQHandler(void) 
+
+void push_delay_ms(vu32 count)
 {
-    BFTM_ClearFlag(HT_BFTM0);
-    Check_Force();
+  count = SystemCoreClock / 8000 * count ;
+  while(count--);
 }
 
+void push_delay_us(vu32 count)
+{
+  count = SystemCoreClock / 8000 * count /1000;
+  while(count--);
+}
 
 
 
