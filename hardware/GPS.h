@@ -14,11 +14,11 @@
 
 #define  USART_REC_LEN  150
 #define GPS_Buffer_Length 150
-#define UTCTime_Length 11
-#define latitude_Length 11
-#define N_S_Length 2
-#define longitude_Length 12
-#define E_W_Length 2 
+#define UTCTime_Length 10
+#define latitude_Length 10 
+#define N_S_Length 1
+#define longitude_Length 11
+#define E_W_Length 1 
 #include "string.h"
 
 typedef struct SaveData 
@@ -34,16 +34,6 @@ typedef struct SaveData
 	char isUsefull;		//定位信息是否有效
 } _SaveData;
 
-typedef struct {
-    float dx; // 经度方向的差值
-    float dy; // 纬度方向的差值
-	uint8_t isValid; // 是否有效
-} DirectionVector;
-
-
-extern _SaveData Save_Data;
-extern  DirectionVector Dis;
 void GPS_Init(void);
 void parseGpsBuffer(void);
-void CalculateDirectionVector(_SaveData current, _SaveData target);
 #endif
