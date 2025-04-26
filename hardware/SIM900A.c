@@ -9,7 +9,7 @@ uint8_t verification_code[7];		//存放验证码
 
 
 char sim900A_flag=0;
-
+uint8_t max_len = 128;
 uint8_t sim900a_receive_data[128] = {0};
 uint16_t sim900a_receive_count = 0;
 
@@ -35,6 +35,7 @@ uint8_t sim900a_send_cmd(uint8_t *str, uint8_t *ack, uint16_t timeout_ms)
     sim900a_receive_count = 0;
 
     SIM_Usart_sendString((char *)str);  // 发送AT指令
+    USART_ReadResponse(SIM_UART_HT, sim900a_receive_data, max_len);
 
     if (ack == NULL) return 0;
 
@@ -60,7 +61,8 @@ uint8_t sim900a_send_end(uint8_t data, uint8_t *ack, uint16_t timeout_ms)
     memset(sim900a_receive_data, '\0', sizeof(sim900a_receive_data));
 
     USART_SendData(SIM_UART_HT, data);  // 发送 Ctrl+Z 或结束符
-
+    USART_ReadResponse(SIM_UART_HT, sim900a_receive_data, max_len);
+	
     if (ack == NULL) return 1;  // 无需判断，直接成功
 
     while (timeout_ms--)
@@ -354,7 +356,7 @@ void SIM900A_delay_us(vu32 count)
   while(count--);
 }
 
-int USART_ReadResponse(HT_USART_TypeDef* USARTx, char* response, int max_len)
+int USART_ReadResponse(HT_USART_TypeDef* USARTx, uint8_t* response, int max_len)
 {
     int i = 0;
     char c;
