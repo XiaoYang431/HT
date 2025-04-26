@@ -41,7 +41,7 @@
 #include "middleware/i2c_master.h"
 #include "middleware/uart_module.h"
 
-#define BM7701_00_1_SERIAL                            (1)
+#define BM7701_00_1_SERIAL                            (4)
 	 
 #define TX_POWER     0x0F                   //TX Power
 #define XTAL_CLOAD   0x04                   //16MHz Crystal load
