@@ -271,7 +271,7 @@ void BFTM0_IRQHandler(void)
     // HTCFG_CAP_PORT_decode1A->CNTR = 0;//获取编码器计数值
     // HTCFG_CAP_PORT_decode2A->CNTR = 0;//获取编码器计数值
     //// Do something
-		Speed_left = PID_Turn( encder_left, encder_left,  1, 2);
+		
 
 	  
   }

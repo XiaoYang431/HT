@@ -6,7 +6,7 @@
 //使用串口UART1
 uint8_t BiZhang_Init(void)
 {
- if(BM32S2031_1_selSerial(UARTM_CH1) == BM32S2031_1_FAILURE) return 1;
+ if(BM32S2031_1_selSerial(UARTM_CH2) == BM32S2031_1_FAILURE) return 1;
 BM32S2031_1_Init();
  BM32S2031_1_setMode(0x80);
 BM32S2031_1_setIROutputTime(0x03);

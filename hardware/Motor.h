@@ -101,6 +101,7 @@ int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right
 uint8_t BMS56M605_my_init(void);
 void INt_Get_Gyro_Init(void);
 //int16_t Bizhnag_Start(void);
+	void BMP73T104_reset(void);
 
 
 

@@ -42,11 +42,11 @@ int main(void)
 
 			/*************************************电机模块*********************/
 RETARGET_Configuration();
-
-BMS56M605_my_init();
+while(BiZhang_Init());
+//BMS56M605_my_init();
 Motor_Init();
 INt_Get_Gyro_Init();
-
+while(BM32S2031_1_distanceLearning());
 //初始化编码器
 //Set_Motor_decode1();
 //Set_Motor_decode2();
@@ -62,13 +62,16 @@ INt_Get_Gyro_Init();
 //Motor_Run(Motor_Left_down,00);
 
   
-
+ 
+	
 
 	while(1)
 	{
+		
 		static uint8_t jishu = 0;
 		
 	//Turn	= PID_Turn( encder_left, encder_left,  1, 2);
+		Veloc = BM32S2031_1_getIRStatus();
 	if(BM32S2031_1_getIRStatus() == 1)
      {
 		//进行避障，在这个过程中，小车只会转向，不会前进
@@ -83,7 +86,7 @@ INt_Get_Gyro_Init();
 	Motor_Run(Motor_Left_down,+60);
 	Motor_Run(Motor_Right_up,-60);
 	Motor_Run(Motor_Right_down,-60);
-    _BMP73T104_delay(500);
+    _BMP73T104_delay(1000);
 //将小车转回去
            Motor_Run(Motor_Left_up,-80);
 	Motor_Run(Motor_Left_down,+80);
@@ -95,42 +98,46 @@ INt_Get_Gyro_Init();
 	
 		   
      }
-	 else
-	 {
-		if(jishu != 0)
-		{
-			jishu = 0;
-			//这里要重新计算目标与现在的方向
-	      CalculateDirectionVector(Save_Data,  target) ;
-
-		}
-		if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
-     {
-		if(Dis.isValid)
-		{
-			// 判断是否到达目标转向角度
-			
-				if(fabs(angle_error) < 0.052)
-			{
-		//已经到达目标转向，停止转向，并重新初始化
-		 Speed_Turn = 0;
-		current_angle = 0;
-		Dis.isValid = 0;
-			}
-				else
-			{
-			 Speed_Turn =  PID_Turn(1, 2);//dx,dy
-			}
-	 }
-
-	 Motor_Run(Motor_Left_up,+Speed_Turn);
-	Motor_Run(Motor_Left_down,-Speed_Turn);
-	Motor_Run(Motor_Right_up,+Speed_Turn);
-	Motor_Run(Motor_Right_down,-Speed_Turn);
-	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
-
-}
-	 }
+	 Motor_Run(Motor_Left_up,-0);
+	Motor_Run(Motor_Left_down,+0);
+	Motor_Run(Motor_Right_up,-0);
+	Motor_Run(Motor_Right_down,+0);
+//	 else
+//	 {
+//		if(jishu != 0)
+//		{
+//			jishu = 0;
+//			//这里要重新计算目标与现在的方向
+//	    //  CalculateDirectionVector(Save_Data,  target) ;
+//
+//		}
+//		if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
+//     {
+//		if(Dis.isValid)
+//		{
+//			// 判断是否到达目标转向角度
+//			
+//				if(fabs(angle_error) < 0.052)
+//			{
+//		//已经到达目标转向，停止转向，并重新初始化
+//		 Speed_Turn = 0;
+//		current_angle = 0;
+//		Dis.isValid = 0;
+//			}
+//				else
+//			{
+//			 Speed_Turn =  PID_Turn(1, 2);//dx,dy
+//			}
+//	 }
+//
+//	 Motor_Run(Motor_Left_up,+Speed_Turn);
+//	Motor_Run(Motor_Left_down,-Speed_Turn);
+//	Motor_Run(Motor_Right_up,+Speed_Turn);
+//	Motor_Run(Motor_Right_down,-Speed_Turn);
+//	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
+//
+//}
+//	 }
 
 
      

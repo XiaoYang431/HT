@@ -1,5 +1,5 @@
 Dependencies for Project 'project', Target 'HT32': (DO NOT MODIFY !)
-F (..\ht32f5xxxx_01_it.c)(0x68048B83)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/ht32f5xxxx_01_it.o -MD)
+F (..\ht32f5xxxx_01_it.c)(0x680771B7)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/ht32f5xxxx_01_it.o -MD)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32.h)(0x67DC0EF3)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h)(0x67DC0EF3)
@@ -46,16 +46,16 @@ I (..\..\library\HT32F5xxxx_Driver\inc\ht32_cm0plus_misc.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_serial.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_div.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_rand.h)(0x67DC0EF3)
-I (..\..\hardware\GPS.h)(0x67FDD23A)
+I (..\..\hardware\GPS.h)(0x68076CB4)
 I (D:\stm32 application\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
-I (..\..\hardware\Motor.h)(0x68076342)
+I (..\..\hardware\Motor.h)(0x68078670)
 I (..\..\hardware\BMS56M605.h)(0x680497AD)
 I (..\i2c_master_config.h)(0x67DC0EF3)
 I (..\ht32_board_config.h)(0x67F6AA5B)
 I (..\..\utilities\bmduino_board.h)(0x67DC0EF3)
 I (..\..\utilities\bmduino_check.h)(0x67DC0EF3)
 I (..\..\utilities\middleware\i2c_master.h)(0x67DC0EF3)
-F (..\main.c)(0x68076606)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/main.o -MD)
+F (..\main.c)(0x680C9123)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/main.o -MD)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32.h)(0x67DC0EF3)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h)(0x67DC0EF3)
@@ -116,10 +116,12 @@ I (..\..\utilities\bmduino_board.h)(0x67DC0EF3)
 I (..\..\utilities\bmduino_check.h)(0x67DC0EF3)
 I (..\..\utilities\middleware\i2c_master.h)(0x67DC0EF3)
 I (..\..\hardware\Bizhang.h)(0x67F8CF15)
-I (..\..\hardware\Motor.h)(0x68076342)
+I (..\..\hardware\Motor.h)(0x68078670)
 I (..\..\hardware\BMS56M605.h)(0x680497AD)
 I (..\..\hardware\Kaerman.h)(0x67FB8F81)
 I (D:\stm32 application\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
+I (..\..\hardware\GPS.h)(0x68076CB4)
+I (D:\stm32 application\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
 F (..\ht32f5xxxx_01_usbdconf.h)(0x67DC0EF3)()
 F (..\ht32f5xxxx_conf.h)(0x67DC0EF3)()
 F (.\ht32_op.s)(0x67DC0EF3)(--cpu Cortex-M0+ -g --pd "__MICROLIB SETA 1"-I.\RTE\_HT32-I"D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx"-I"D:\stm32 application\ARM\CMSIS\Include"--pd "__UVISION_VERSION SETA 524"--pd "USE_HT32F52357_67 SETA 1"--pd "USE_HT32_CHIP SETA 11"--pd "USE_LIBCFG_RAM_SIZE SETA 0x8000"-o .\ht32\52352\ht32_op.o--depend .\ht32\52352\ht32_op.d)
@@ -171,7 +173,7 @@ I (..\..\library\HT32F5xxxx_Driver\inc\ht32_cm0plus_misc.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_serial.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_div.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_rand.h)(0x67DC0EF3)
-F (.\startup_ht32f5xxxx_03.s)(0x67F78C61)(--cpu Cortex-M0+ -g --pd "__MICROLIB SETA 1"-I.\RTE\_HT32-I"D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx"-I"D:\stm32 application\ARM\CMSIS\Include"--pd "__UVISION_VERSION SETA 524"--pd "USE_HT32F52357_67 SETA 1"--pd "USE_HT32_CHIP SETA 11"--pd "USE_LIBCFG_RAM_SIZE SETA 0x8000"-o .\ht32\52352\startup_ht32f5xxxx_03.o--depend .\ht32\52352\startup_ht32f5xxxx_03.d)
+F (.\startup_ht32f5xxxx_03.s)(0x680B8D90)(--cpu Cortex-M0+ -g --pd "__MICROLIB SETA 1"-I.\RTE\_HT32-I"D:\stm32 application\ARM\PACK\Holtek\HT32_DFP\1.0.63\ARM\INC\Holtek\HT32F5xxxx"-I"D:\stm32 application\ARM\CMSIS\Include"--pd "__UVISION_VERSION SETA 524"--pd "USE_HT32F52357_67 SETA 1"--pd "USE_HT32_CHIP SETA 11"--pd "USE_LIBCFG_RAM_SIZE SETA 0x8000"-o .\ht32\52352\startup_ht32f5xxxx_03.o--depend .\ht32\52352\startup_ht32f5xxxx_03.d)
 F (..\..\library\HT32F5xxxx_Driver\src\ht32_retarget.c)(0x67DC0EF3)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/ht32_retarget.o -MD)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32.h)(0x67DC0EF3)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
@@ -1925,7 +1927,7 @@ I (..\..\library\HT32F5xxxx_Driver\inc\ht32_div.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_rand.h)(0x67DC0EF3)
 I (..\..\hardware\PWM.h)(0x67DC0EF3)
 F (..\..\hardware\PWM.h)(0x67DC0EF3)()
-F (..\..\hardware\GPS.c)(0x68075F6D)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/gps.o -MD)
+F (..\..\hardware\GPS.c)(0x68076D07)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/gps.o -MD)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h)(0x67DC0EF3)
 I (..\..\library\CMSIS\Include\core_cm0plus.h)(0x67DC0EF3)
@@ -1972,10 +1974,10 @@ I (..\..\library\HT32F5xxxx_Driver\inc\ht32_cm0plus_misc.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_serial.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_div.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_rand.h)(0x67DC0EF3)
-I (..\..\hardware\GPS.h)(0x67FDD23A)
+I (..\..\hardware\GPS.h)(0x68076CB4)
 I (D:\stm32 application\ARM\ARMCLANG\include\string.h)(0x588CAFD2)
 I (D:\stm32 application\ARM\ARMCLANG\include\stdbool.h)(0x588CAFD2)
-F (..\..\hardware\GPS.h)(0x67FDD23A)()
+F (..\..\hardware\GPS.h)(0x68076CB4)()
 F (..\..\hardware\BMP73T104.c)(0x68048B49)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/bmp73t104.o -MD)
 I (..\..\hardware\BMP73T104.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32.h)(0x67DC0EF3)
@@ -2137,7 +2139,7 @@ I (..\..\utilities\bmduino_check.h)(0x67DC0EF3)
 I (..\..\utilities\middleware\i2c_master.h)(0x67DC0EF3)
 I (..\..\utilities\middleware\uart_module.h)(0x67DC0EF3)
 F (..\..\hardware\BM32S2031_1.h)(0x67F76227)()
-F (..\..\hardware\Motor.c)(0x68076371)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/motor.o -MD)
+F (..\..\hardware\Motor.c)(0x6807698F)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/motor.o -MD)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h)(0x67DC0EF3)
 I (..\..\library\CMSIS\Include\core_cm0plus.h)(0x67DC0EF3)
@@ -2190,14 +2192,14 @@ I (..\ht32_board_config.h)(0x67F6AA5B)
 I (..\..\utilities\bmduino_board.h)(0x67DC0EF3)
 I (..\..\utilities\bmduino_check.h)(0x67DC0EF3)
 I (..\..\utilities\middleware\i2c_master.h)(0x67DC0EF3)
-I (..\..\hardware\Motor.h)(0x68076342)
+I (..\..\hardware\Motor.h)(0x68078670)
 I (..\..\hardware\BMS56M605.h)(0x680497AD)
 I (..\..\hardware\Kaerman.h)(0x67FB8F81)
 I (D:\stm32 application\ARM\ARMCLANG\include\math.h)(0x58A47FFE)
 I (..\..\hardware\Bizhang.h)(0x67F8CF15)
 I (D:\stm32 application\ARM\ARMCLANG\include\stdlib.h)(0x588CAFDA)
-F (..\..\hardware\Motor.h)(0x68076342)()
-F (..\..\hardware\Bizhnag.c)(0x67F76227)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/bizhnag.o -MD)
+F (..\..\hardware\Motor.h)(0x68078670)()
+F (..\..\hardware\Bizhnag.c)(0x680B9434)(-xc -std=c99 --target=arm-arm-none-eabi -mcpu=cortex-m0plus -c-fno-rtti -funsigned-char -fshort-enums -fshort-wchar-D__MICROLIB -gdwarf-3 -Oz -ffunction-sections -Wno-packed -Wno-missing-variable-declarations -Wno-missing-prototypes -Wno-missing-noreturn -Wno-sign-conversion -Wno-nonportable-include-path -Wno-reserved-id-macro -Wno-unused-macros -Wno-documentation-unknown-command -Wno-documentation -Wno-license-management -Wno-parentheses-equality -I ../ -I ../../library/CMSIS/Include -I ../../library/Device/Holtek/HT32F5xxxx/Include -I ../../library/HT32F5xxxx_Driver/inc -I ../../library/HT32_USBD_Library/inc -I ../../utilities -I ../../hardware -I ../../hardware -I ../../utilities/middleware-I./RTE/_HT32-I"D:/stm32 application/ARM/PACK/Holtek/HT32_DFP/1.0.63/ARM/INC/Holtek/HT32F5xxxx"-I"D:/stm32 application/ARM/CMSIS/Include"-D__UVISION_VERSION="524" -DUSE_HT32F52357_67 -DUSE_HT32_DRIVER -DUSE_BM53A367A_DVB -DUSE_HT32F52357_67 -DUSE_MEM_HT32F52367-o ./ht32/52352/bizhnag.o -MD)
 I (..\..\library\Device\Holtek\HT32F5xxxx\Include\ht32f5xxxx_01.h)(0x67DC0EF3)
 I (..\..\library\HT32F5xxxx_Driver\inc\ht32_config.h)(0x67DC0EF3)
 I (..\..\library\CMSIS\Include\core_cm0plus.h)(0x67DC0EF3)
