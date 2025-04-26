@@ -1,16 +1,20 @@
 #include "ht32f5xxxx_01.h"
-//#include "Blueteech.h"
+#include "Blueteech.h"
 #include "GPS.h"
 #include "BM7701_00_1.h"
-#include <string.h> // ”√”⁄ memcpy
-//ªÒ»°gps–≈œ¢
+#include <string.h> // Áî®‰∫é memcpy
+
+#include <stdio.h>
+#include <stdlib.h>
+
+//Ëé∑Âèñgps‰ø°ÊÅØ
 extern _SaveData Save_Data;
 
 uint8_t BM7701_00_1_bleProcess(void);
 void _blueteech_delay(vu32 count);
-//¿∂—¿¡¨Ω”◊¥Ã¨
+//ËìùÁâôËøûÊé•Áä∂ÊÄÅ
 bool board_connect = false;
-//rx◊¥Ã¨
+//rxÁä∂ÊÄÅ
 bool board_receive = false;
 bool board_conIntv = false;
 uint8_t Status;         //BLE status
@@ -23,7 +27,72 @@ uint8_t BDName[] = {'B', 'M', 'C', '7', '7', 'M', '0', '0', '1'};//Device name
 uint8_t Adata[] = {0x02, 0x01, 0x06}; 					//advertising data
 uint8_t Sdata[] = {0x03, 0x02, 0x0f, 0x18};     //scan response data
 //------------------------------------------------------------------------------------------
- //¿∂—¿£®¥Æø⁄0£©≥ı ºªØ
+ 
+char gpsdata_receive =0;
+
+GPS_Coordinate parseGPSMessage(const char* msg) {
+    GPS_Coordinate result = {0};
+
+    if (msg[0] != 'T' || msg[1] != ':') {
+        result.valid = 0;
+        return result;
+    }
+
+    char* lat_str = strtok((char*)(msg + 2), ",");
+    char* lon_str = strtok(NULL, ",");
+
+    if (lat_str && lon_str) {
+        result.latitude = atof(lat_str);
+        result.longitude = atof(lon_str);
+        result.valid = 1;
+    }
+
+    return result;
+}
+
+
+    // Â∞ùËØïËØªÂèñËìùÁâôÊï∞ÊçÆ
+void processBluetoothGPS(void) {
+    uint8_t recv_buf[256] = {0};  // Â≠òÂÇ®ÊúÄÁªàÊï∞ÊçÆ
+    uint8_t raw_buf[256] = {0};   // Â≠òÂÇ®‰ªéËìùÁâôÊ®°ÂùóÊé•Êî∂Âà∞ÁöÑÂéüÂßãÊï∞ÊçÆ
+    uint8_t total_len = 0;
+
+    gpsdata_receive = 0;
+
+    // ÂÖà‰∏ÄÊ¨°ÊÄßËØªÂèñÊúÄÈïøÂèØËÉΩÈïøÂ∫¶ÔºåÈÅøÂÖçÂàÜÊÆµ
+    if (BM7701_00_1_readBytes(raw_buf, 2) == BM7701_00_1_READ_OK) {
+        total_len = raw_buf[1];  // Á¨¨‰∫å‰∏™Â≠óËäÇÊòØ payload ÈïøÂ∫¶
+
+        if (total_len > 0 && total_len < sizeof(recv_buf)) {
+            // ÂÜçÊ¨°ËØªÂèñÂâ©‰ΩôÊï∞ÊçÆÂà∞ raw_bufÔºå‰ªé raw_buf[2] ÂºÄÂßã
+            if (BM7701_00_1_readBytes(raw_buf + 2, total_len) == BM7701_00_1_READ_OK) {
+                // Â∞ÜÂÆåÊï¥ÁöÑ payload Êã∑Ë¥ùÂà∞ recv_buf Áªü‰∏ÄÂ§ÑÁêÜÔºà‰ªéÁ¨¨6Â≠óËäÇÂºÄÂßãÊòØÂÆûÈôÖÊï∞ÊçÆÔºâ
+                memcpy(recv_buf, &raw_buf[6], total_len - 4);  // ÂéªÊéâÂâç4‰∏™ÂçèËÆÆÂ§¥Â≠óËäÇ
+
+                // ÊâãÂä®Ê∑ªÂä†Â≠óÁ¨¶‰∏≤ÁªìÊùüÁ¨¶
+                recv_buf[total_len - 4] = '\0'; 
+
+                // ÊòæÁ§∫Êé•Êî∂Âà∞ÁöÑÂéüÂßãÊï∞ÊçÆ
+                printf("Êé•Êî∂Âà∞ÂéüÂßãÊï∞ÊçÆ: %s\n", recv_buf);
+
+                // Ëß£Êûê GPS Êï∞ÊçÆÔºåÊ†ºÂºè‰∏∫ T:latitude,longitude
+                GPS_Coordinate gps = parseGPSMessage((char*)recv_buf);
+                if (gps.valid) {
+                    gpsdata_receive = 1;
+                    // ËæìÂá∫Ëß£ÊûêÁªìÊûú
+                    //printf("Êé•Êî∂Âà∞ÁªèÁ∫¨Â∫¶ÔºöÁ∫¨Â∫¶ = %.6fÔºåÁªèÂ∫¶ = %.6f\n", gps.latitude, gps.longitude);
+                    // ‰Ω†ÂèØ‰ª•Êää gps.latitude / gps.longitude Â≠òËµ∑Êù•Êàñ‰ΩøÁî®
+                } else {
+                    // Â¶ÇÊûúÊï∞ÊçÆÊ†ºÂºè‰∏çÊ≠£Á°ÆÔºåÊâìÂç∞ÈîôËØØ‰ø°ÊÅØ
+                    //printf("Êî∂Âà∞ÁöÑÊï∞ÊçÆÊ†ºÂºèÈîôËØØ: %s\n", recv_buf);
+                }
+            }
+        }
+    }
+}
+
+
+//ËìùÁâôÔºà‰∏≤Âè£0ÔºâÂàùÂßãÂåñ
 void BLUETEETH_Init(void)
 {
     BM7701_00_1_Init(BM7701_00_1_BAUD_115200);
@@ -55,22 +124,22 @@ void BLUETEETH_Init(void)
       
         break;//Configure fail
 		}
-		blueteech_delay(650);
+		//blueteech_delay(650);
 	}
 }
 //------------------------------------------------------------------------------------------
-//¿∂—¿£®¥Æø⁄0£© ∑¢…˙ ˝æ›ø’÷–∂œ∫Ø ˝
+//ËìùÁâôÔºà‰∏≤Âè£0Ôºâ ÂèëÁîüÊï∞ÊçÆÁ©∫‰∏≠Êñ≠ÂáΩÊï∞
 //void USART0_IRQHandler(void)
 //{
 //  u8 data;
-//  if( USART_GetFlagStatus(HT_USART0, USART_FLAG_RXDR) ) // Ω” ’∆˜ FIFO æÕ–˜±Í÷æŒª
+//  if( USART_GetFlagStatus(HT_USART0, USART_FLAG_RXDR) ) // Êé•Êî∂Âô® FIFO Â∞±Áª™Ê†áÂøó‰Ωç
 //    {                                                                                                                                                                                    
-//     data = USART_ReceiveData(HT_USART0); // Ω” ’ ˝æ› ±“—æ≠◊‘∂Ø«Â≥˝÷–∂œ±Í÷æŒª¡À£¨≤ª”√ ÷∂Ø«Â≥˝°£      
+//     data = USART_ReceiveData(HT_USART0); // Êé•Êî∂Êï∞ÊçÆÊó∂Â∑≤ÁªèËá™Âä®Ê∏ÖÈô§‰∏≠Êñ≠Ê†áÂøó‰Ωç‰∫ÜÔºå‰∏çÁî®ÊâãÂä®Ê∏ÖÈô§„ÄÇ      
 //    }             
 //}
 //------------------------------------------------------------------------------------------
 
-//∏˘æ›¿∂—¿◊¥Ã¨÷¥––œ‡”¶∂Ø◊˜
+//Ê†πÊçÆËìùÁâôÁä∂ÊÄÅÊâßË°åÁõ∏Â∫îÂä®‰Ωú
 void Get_blueteech_status(void)
 {
 Status = BM7701_00_1_bleProcess();                                   //Read BLE status
@@ -104,7 +173,7 @@ Status = BM7701_00_1_bleProcess();                                   //Read BLE 
 }
 
 
-//¿∂—¿£®¥Æø⁄0£© Ω” ’ ˝æ›æÕ–˜∫Ø ˝
+//ËìùÁâôÔºà‰∏≤Âè£0Ôºâ Êé•Êî∂Êï∞ÊçÆÂ∞±Áª™ÂáΩÊï∞
 /*
 void BLUETEETH_USART_Tx(uint8_t *TxBuffer, uint8_t length)
 {
@@ -112,10 +181,10 @@ void BLUETEETH_USART_Tx(uint8_t *TxBuffer, uint8_t length)
  
   for (i = 0; i < length; i++)
   {
-    while (USART_GetFlagStatus(HT_USART1, USART_FLAG_TXC) == RESET); // ≈–∂œ «∑Ò ∑¢ÀÕÕÍ≥…
+    while (USART_GetFlagStatus(HT_USART1, USART_FLAG_TXC) == RESET); // Âà§Êñ≠ÊòØÂê¶ ÂèëÈÄÅÂÆåÊàê
 
 	BM7701_00_1_writeData( TxBuffer[i],length);  
-    //while (USART_GetFlagStatus(HT_USARTx, USART_FLAG_TXDE) == RESET); // ≈–∂œ «∑Ò ∑¢ÀÕÕÍ≥…
+    //while (USART_GetFlagStatus(HT_USARTx, USART_FLAG_TXDE) == RESET); // Âà§Êñ≠ÊòØÂê¶ ÂèëÈÄÅÂÆåÊàê
   }
 }
 */
@@ -123,14 +192,14 @@ void GPS_To_BlueTooth(void)
 {
     if (Save_Data.isParseData && Save_Data.isUsefull)
 	{
-		//∏¥Œª±Í÷æŒª
+		//Â§ç‰ΩçÊ†áÂøó‰Ωç
 	  Save_Data.isUsefull = false;
       Save_Data.isParseData = false;
 
-	uint8_t buffer[64]; // ∏˘æ›¥Ú∞¸◊÷∂Œ◊‹≥§∂»π¿À„
+	uint8_t buffer[64]; // Ê†πÊçÆÊâìÂåÖÂ≠óÊÆµÊÄªÈïøÂ∫¶‰º∞ÁÆó
     uint8_t index = 0;
 
-    // øΩ±¥◊÷∂ŒµΩ∑¢ÀÕª∫≥Â«¯
+    // Êã∑Ë¥ùÂ≠óÊÆµÂà∞ÂèëÈÄÅÁºìÂÜ≤Âå∫
     memcpy(&buffer[index], (uint8_t*)Save_Data.UTCTime, sizeof(Save_Data.UTCTime));
     index += sizeof(Save_Data.UTCTime);
 
@@ -148,13 +217,13 @@ void GPS_To_BlueTooth(void)
 
     buffer[index++] = Save_Data.isUsefull;
 
-    // ∑¢ÀÕ ˝æ›
+    // ÂèëÈÄÅÊï∞ÊçÆ
     BM7701_00_1_writeData(buffer, index);
     }
 
 }
 
-//ªÒ»°¿∂—¿◊¥Ã¨
+//Ëé∑ÂèñËìùÁâôÁä∂ÊÄÅ
 uint8_t BM7701_00_1_bleProcess(void)
 {
   uint8_t st = BM7701_00_1_API_ERROR;
@@ -191,5 +260,6 @@ void blueteech_delay(vu32 count)
   count = SystemCoreClock / 8000 * count;
   while(count--);
 }
+
 
 
