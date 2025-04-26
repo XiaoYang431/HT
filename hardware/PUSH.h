@@ -6,5 +6,5 @@
  void Get_Weight(void);
  void BFTM1_Config(void);
  void Check_Force(void);
- 
+ u32 HX711_Read(void);
 #endif
