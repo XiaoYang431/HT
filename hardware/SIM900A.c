@@ -31,24 +31,38 @@ void SIM_Usart_sendString(const char *str)
 ***********************************************************************/
 uint8_t sim900a_send_cmd(uint8_t *str, uint8_t *ack, uint16_t timeout_ms)
 {
-    memset(sim900a_receive_data, '\0', sizeof(sim900a_receive_data));
+    memset(sim900a_receive_data, 0, sizeof(sim900a_receive_data));
     sim900a_receive_count = 0;
 
+    if (str == NULL || ack == NULL) return 0;
+
     SIM_Usart_sendString((char *)str);  // 发送AT指令
-    USART_ReadResponse(SIM_UART_HT, sim900a_receive_data, max_len);
 
-    if (ack == NULL) return 0;
-
-    while (timeout_ms--)
+    uint16_t timeout_count = timeout_ms; 
+    while (timeout_count--)
     {
-        SIM900A_delay_ms(10);  // 延时 10ms，减少 CPU 空闲时间
+        // 每10ms读取一次数据
+        SIM900A_delay_ms(10);
+
+        // 检查有没有新的数据到来
+        if (USART_GetFlagStatus(SIM_UART_HT, USART_FLAG_RXDR) == SET)
+        {
+            if (sim900a_receive_count < sizeof(sim900a_receive_data) - 1) // 预留 \0
+            {
+                sim900a_receive_data[sim900a_receive_count++] = USART_ReceiveData(SIM_UART_HT);
+                sim900a_receive_data[sim900a_receive_count] = '\0'; // 每次都保证结尾
+            }
+        }
+
+        // 每次接收完一批数据，去查找有没有ACK
         if (strstr((char *)sim900a_receive_data, (char *)ack) != NULL)
         {
             return 1; // 成功匹配ACK
         }
     }
-    return 0; // 超时未匹配ACK
+    return 0; // 超时未匹配到ACK
 }
+
 
 /**********************************************************************
 描述:   SIM900A模块发送指令 函数
@@ -58,25 +72,41 @@ uint8_t sim900a_send_cmd(uint8_t *str, uint8_t *ack, uint16_t timeout_ms)
 uint8_t sim900a_send_end(uint8_t data, uint8_t *ack, uint16_t timeout_ms)
 {
     sim900a_receive_count = 0;  
-    memset(sim900a_receive_data, '\0', sizeof(sim900a_receive_data));
+    memset(sim900a_receive_data, 0, sizeof(sim900a_receive_data));
 
-    USART_SendData(SIM_UART_HT, data);  // 发送 Ctrl+Z 或结束符
-    USART_ReadResponse(SIM_UART_HT, sim900a_receive_data, max_len);
-	
-    if (ack == NULL) return 1;  // 无需判断，直接成功
+    USART_SendData(SIM_UART_HT, data);  // 发送 Ctrl+Z 或其他结束符
 
-    while (timeout_ms--)
+    // 发送完毕后，进入等待接收阶段
+    uint16_t timeout_count = timeout_ms;
+    while (timeout_count--)
     {
-        SIM900A_delay_ms(10);  // 每次检查间隔 10ms
-        if (strstr((char *)sim900a_receive_data, (char *)ack) != NULL)
+        SIM900A_delay_ms(10);
+
+        // 检查是否有新数据到来
+        if (USART_GetFlagStatus(SIM_UART_HT, USART_FLAG_RXDR) == SET)
         {
-            return 1; // 成功找到 ack
+            if (sim900a_receive_count < sizeof(sim900a_receive_data) - 1)
+            {
+                sim900a_receive_data[sim900a_receive_count++] = USART_ReceiveData(SIM_UART_HT);
+                sim900a_receive_data[sim900a_receive_count] = '\0'; // 保证是字符串
+            }
+        }
+
+        if (ack != NULL)
+        {
+            if (strstr((char *)sim900a_receive_data, (char *)ack) != NULL)
+            {
+                return 1; // 成功找到 ACK
+            }
+        }
+        else
+        {
+            return 1; // 不需要找ack，直接成功
         }
     }
 
-    return 0; // 超时未找到 ack，失败
+    return 0; // 超时失败
 }
-
 
 /**********************************************************************
 描述:   随机生成验证码（'0'~'9'）
@@ -303,11 +333,11 @@ void SIM_USART_Init(void)
     USART_RxCmd(SIM_UART_HT, ENABLE);
 
     // Step 5: Enable UART receive interrupt
-USART_IntConfig(SIM_UART_HT, USART_INT_RXDR, ENABLE);
+//USART_IntConfig(SIM_UART_HT, USART_INT_RXDR, ENABLE);
 
      //Step 6: Configure NVIC for UART interrupt
- NVIC_SetPriority(UART3_IRQn, 2); // 设置中断优先级为1，优先级值越小，优先级越高
-    NVIC_EnableIRQ(UART3_IRQn);
+// NVIC_SetPriority(UART3_IRQn, 2); // 设置中断优先级为1，优先级值越小，优先级越高
+//    NVIC_EnableIRQ(UART3_IRQn);
 }
 
 //清空缓存区
@@ -491,7 +521,8 @@ int SIM900A_MakeCall(const char* phoneNumber)
     SIM900A_delay_ms(1000);  // 等待响应
 
     // 假设有一个函数来读取串口响应
-    if (USART_ReadResponse(SIM_UART_HT, response, sizeof(response)) > 0) {
+    if(USART_ReadResponse(SIM_UART_HT, sim900a_receive_data, max_len)>1)
+		{
         // 检查响应中是否包含通话状态
         if (strstr(response, "+CLCC: 1,1") != NULL) {
             // 通话已建立

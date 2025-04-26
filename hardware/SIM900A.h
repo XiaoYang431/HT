@@ -41,7 +41,7 @@ uint8_t sim900a_init(void);
 uint8_t sim900a_send_verification_code(void);
 void SIM900A_delay_ms(vu32 count);
 void SIM900A_delay_us(vu32 count);
-int USART_ReadResponse(HT_USART_TypeDef* USARTx, char* response, int max_len);
+int USART_ReadResponse(HT_USART_TypeDef* USARTx, uint8_t* response, int max_len);
 void SIM900A_SendCHSMS(char *message, char *phonenumber);
 void SIM900A_SendENGSMS(char *message, char *phonenumber);
 int SIM900A_MakeCall(const char* phoneNumber);
