@@ -62,7 +62,7 @@ void Get_Maopi(void)
 }
 
 //计算实际拉力
-void Get_Weight(void) 
+float Get_Weight(void) 
 {
     HX711_Buffer = HX711_Read();
     if (HX711_Buffer > Weight_Maopi) 
@@ -70,6 +70,7 @@ void Get_Weight(void)
         Weight_Shiwu = HX711_Buffer - Weight_Maopi;
         Weight_Shiwu = (s32)((float)Weight_Shiwu / GapValue);  //计算实际拉力
     }
+	return Weight_Shiwu;
 }
 
 //配置定时器
