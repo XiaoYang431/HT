@@ -375,9 +375,26 @@ void USART0_IRQHandler(void)
  * @brief   This function handles USART interrupt.
  * @retval  None
  ************************************************************************************************************/
-//void USART1_IRQHandler(void)
-//{
-//}
+void USART1_IRQHandler(void)
+{	if (USART_GetFlagStatus(SIM_UART_HT, USART_FLAG_RXDR)) // 接收中断
+    {
+        uint8_t ch = USART_ReceiveData(SIM_UART_HT);  // 读取接收到的数据
+		
+        // 将接收到的字节存入接收缓冲区
+        sim_rx_buffer[sim_rx_index++] = ch;
+
+        // 检查是否接收到完整的 "OK" 字符串
+        if (sim_rx_index >= 2)  // "OK" 至少需要两个字符
+        {
+            // 比较接收到的最后两个字符
+            if (sim_rx_buffer[sim_rx_index - 2] == 'O' && sim_rx_buffer[sim_rx_index - 1] == 'K')
+            {
+                sim_rx_flag = 1;  // 设置接收标志为1，表示已接收到 "OK"
+                sim_rx_index = 0; // 重置索引，准备接收下一个数据
+            }
+        }
+	}	
+}
 
 /*********************************************************************************************************//**
  * @brief   This function handles UART interrupt.
