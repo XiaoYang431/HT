@@ -15,14 +15,24 @@ u8 Flag_Error = 0;
 //配置压力传感器引脚
 void Init_HX711pin(void)
 {
-    CKCU_PeripClockConfig_TypeDef CKCUClock = {{0}};
-    CKCUClock.Bit.PB = 1;
-    CKCU_PeripClockConfig(CKCUClock, ENABLE);
-
-    GPIO_SetOutBits(HT_GPIOB, HX711_SCK);
-    GPIO_DirectionConfig(HT_GPIOB, HX711_SCK, GPIO_DIR_OUT);
-    GPIO_DirectionConfig(HT_GPIOB, HX711_DOUT, GPIO_DIR_IN);
-    GPIO_PullResistorConfig(HT_GPIOB, HX711_DOUT, GPIO_PR_UP);
+    CKCU_PeripClockConfig_TypeDef CCLOCK;
+	
+	CCLOCK.Bit.PB  = 1;
+	CCLOCK.Bit.AFIO  = 1;	
+	CKCU_PeripClockConfig(CCLOCK, ENABLE);
+	
+	AFIO_GPxConfig(GPIO_PB, AFIO_PIN_0, AFIO_FUN_GPIO);//复用
+	
+	GPIO_PullResistorConfig(HT_GPIOB,GPIO_PIN_0 , GPIO_PR_UP);
+	GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_0, GPIO_DIR_OUT);
+	
+	GPIO_OpenDrainConfig(HT_GPIOB,GPIO_PIN_0,DISABLE);//推挽输出
+	GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_0, GPIO_DIR_OUT);
+	
+	AFIO_GPxConfig(GPIO_PB, GPIO_PIN_1, AFIO_FUN_GPIO);
+	GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_1, GPIO_DIR_IN);
+	GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_1, GPIO_PR_UP);
+	GPIO_InputConfig(HT_GPIOB, GPIO_PIN_1, ENABLE);
 }
 
 //读取压力传感器数据
