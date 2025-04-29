@@ -4,15 +4,15 @@ void push_delay_us(vu32 count);
 #define HX711_SCK   (1 << 0)  //  GPIOB Pin 0
 #define HX711_DOUT  (1 << 1)  //  GPIOB Pin 1
 
-u32 HX711_Buffer;  //HX711²É¼¯µÄÔ­Ê¼Êı¾İ
-u32 Weight_Maopi; //¿ÕÔØÆ¤Ã«Öµ
-s32 Weight_Shiwu; //Êµ¼ÊÀ­Á¦Öµ
+u32 HX711_Buffer;  //HX711é‡‡é›†çš„åŸå§‹æ•°æ®
+u32 Weight_Maopi; //ç©ºè½½çš®æ¯›å€¼
+s32 Weight_Shiwu; //å®é™…æ‹‰åŠ›å€¼
 u8 Flag_Error = 0;
 
-#define GapValue 430  //Ğ£×¼²ÎÊı
-#define THRESHOLD 20 //´¥·¢ÖĞ¶ÏµÄÀ­Á¦ãĞÖµ£¬µ¥Î»£ºN
+#define GapValue 430  //æ ¡å‡†å‚æ•°
+#define THRESHOLD 20 //è§¦å‘ä¸­æ–­çš„æ‹‰åŠ›é˜ˆå€¼ï¼Œå•ä½ï¼šN
 
-//ÅäÖÃÑ¹Á¦´«¸ĞÆ÷Òı½Å
+//é…ç½®å‹åŠ›ä¼ æ„Ÿå™¨å¼•è„š
 void Init_HX711pin(void)
 {
     CKCU_PeripClockConfig_TypeDef CCLOCK;
@@ -21,12 +21,12 @@ void Init_HX711pin(void)
 	CCLOCK.Bit.AFIO  = 1;	
 	CKCU_PeripClockConfig(CCLOCK, ENABLE);
 	
-	AFIO_GPxConfig(GPIO_PB, AFIO_PIN_0, AFIO_FUN_GPIO);//¸´ÓÃ
+	AFIO_GPxConfig(GPIO_PB, AFIO_PIN_0, AFIO_FUN_GPIO);//å¤ç”¨
 	
 	GPIO_PullResistorConfig(HT_GPIOB,GPIO_PIN_0 , GPIO_PR_UP);
 	GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_0, GPIO_DIR_OUT);
 	
-	GPIO_OpenDrainConfig(HT_GPIOB,GPIO_PIN_0,DISABLE);//ÍÆÍìÊä³ö
+	GPIO_OpenDrainConfig(HT_GPIOB,GPIO_PIN_0,DISABLE);//æ¨æŒ½è¾“å‡º
 	GPIO_DirectionConfig(HT_GPIOB, GPIO_PIN_0, GPIO_DIR_OUT);
 	
 	AFIO_GPxConfig(GPIO_PB, GPIO_PIN_1, AFIO_FUN_GPIO);
@@ -35,7 +35,7 @@ void Init_HX711pin(void)
 	GPIO_InputConfig(HT_GPIOB, GPIO_PIN_1, ENABLE);
 }
 
-//¶ÁÈ¡Ñ¹Á¦´«¸ĞÆ÷Êı¾İ
+//è¯»å–å‹åŠ›ä¼ æ„Ÿå™¨æ•°æ®
 u32 HX711_Read(void)
 {
     unsigned long count = 0;
@@ -65,48 +65,49 @@ u32 HX711_Read(void)
     return count;
 }
 
-//»ñÈ¡¿ÕÔØÖµ
+//è·å–ç©ºè½½å€¼
 void Get_Maopi(void) 
 {
     Weight_Maopi = HX711_Read();
 }
 
-//¼ÆËãÊµ¼ÊÀ­Á¦
+//è®¡ç®—å®é™…æ‹‰åŠ›
 float Get_Weight(void) 
 {
     HX711_Buffer = HX711_Read();
     if (HX711_Buffer > Weight_Maopi) 
 	{
         Weight_Shiwu = HX711_Buffer - Weight_Maopi;
-        Weight_Shiwu = (s32)((float)Weight_Shiwu / GapValue);  //¼ÆËãÊµ¼ÊÀ­Á¦
+        Weight_Shiwu = (s32)((float)Weight_Shiwu / GapValue);  //è®¡ç®—å®é™…æ‹‰åŠ›
     }
 	return Weight_Shiwu;
 }
 
-//ÅäÖÃ¶¨Ê±Æ÷
+//é…ç½®å®šæ—¶å™¨
 void BFTM1_Config(void) 
 {
-    //Ê¹ÄÜBFTM1Ê±ÖÓ
+    //ä½¿èƒ½BFTM1æ—¶é’Ÿ
     CKCU_PeripClockConfig_TypeDef CKCUClock = {{0}};
     CKCUClock.Bit.BFTM1 = 1;
     CKCU_PeripClockConfig(CKCUClock, ENABLE);
 
-    //ÅäÖÃ¶¨Ê±ÖÜÆÚ£¬10ms´¥·¢Ò»´ÎÖĞ¶Ï
+    //é…ç½®å®šæ—¶å‘¨æœŸï¼Œ10msè§¦å‘ä¸€æ¬¡ä¸­æ–­
     uint32_t timer_clk = SystemCoreClock / 1000;  // 72MHz / 1000 = 72kHz
-    uint32_t reload = (timer_clk * 10) - 1;       // 10ms ´¥·¢Ò»´ÎÖĞ¶Ï
+    uint32_t reload = (timer_clk * 10) - 1;       // 10ms è§¦å‘ä¸€æ¬¡ä¸­æ–­
 
-    //ÅäÖÃBFTM1¶¨Ê±Æ÷
+    //é…ç½®BFTM1å®šæ—¶å™¨
     BFTM_SetCounter(HT_BFTM1, 0);
     BFTM_SetCompare(HT_BFTM1, reload);
     BFTM_IntConfig(HT_BFTM1, ENABLE);
     NVIC_EnableIRQ(BFTM1_IRQn);
 
-    //Æô¶¯BFTM1¶¨Ê±Æ÷
+    //å¯åŠ¨BFTM1å®šæ—¶å™¨
     BFTM_EnaCmd(HT_BFTM1, ENABLE);
 }
 
-//¼ì²éÀ­Á¦´«¸ĞÆ÷ÊÇ·ñ´ïµ½À­Á¦ÉÏÏŞ
-void Check_Force(void) 
+
+//æ£€æŸ¥æ‹‰åŠ›ä¼ æ„Ÿå™¨æ˜¯å¦è¾¾åˆ°æ‹‰åŠ›ä¸Šé™
+bool Check_Force(void) 
 {
     static u8 alert_sent = 0;
     Get_Weight();
@@ -116,12 +117,14 @@ void Check_Force(void)
         if(!alert_sent)
         {
             alert_sent = 1;
-            SendForceAlert(Weight_Shiwu);  //´ïµ½ÉÏÏŞ¾Í±¨¾¯£¬Í¬Ê±·¢¶ÌĞÅ/´òµç»°¸øÊÖ»ú£¬Í¬Ê±Ğ¡³µÍ£Ö¹ÔË¶¯
+            SendForceAlert();  //è¾¾åˆ°ä¸Šé™å°±æŠ¥è­¦ï¼ŒåŒæ—¶å‘çŸ­ä¿¡/æ‰“ç”µè¯ç»™æ‰‹æœºï¼ŒåŒæ—¶å°è½¦åœæ­¢è¿åŠ¨
+			return false;
         }
     }
     else 
     {
-        alert_sent = 0;  // Çå³ı±êÖ¾
+        alert_sent = 0;  // æ¸…é™¤æ ‡å¿—
+		return true;
     }
 }
 
@@ -137,7 +140,6 @@ void push_delay_us(vu32 count)
   count = SystemCoreClock / 8000 * count /1000;
   while(count--);
 }
-
 
 
 
