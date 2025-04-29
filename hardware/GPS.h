@@ -33,7 +33,8 @@ typedef struct SaveData
 	char E_W[E_W_Length];		//E/W
 	char isUsefull;		//定位信息是否有效
 } _SaveData;
-
+float str2float(const char* str);
 void GPS_Init(void);
 void parseGpsBuffer(void);
+void CalculateDirectionVector(_SaveData current, _SaveData target);
 #endif
