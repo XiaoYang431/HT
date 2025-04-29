@@ -2,11 +2,14 @@
 #include "GPS.h"
 #include <stdio.h> 
 #include <stdbool.h>
-
+#include <math.h>
+#include <stdint.h>
  uint16_t point1 = 0;
  char USART_RX_BUF[USART_REC_LEN];
  _SaveData Save_Data = {0};
-DirectionVector Dis = {0};
+ _SaveData my_target ={0};
+
+ DirectionVector Dis = {0};
 void GPS_Init(void)
 {
      // Step 1: Enable peripheral clocks for GPIO and UART
@@ -215,6 +218,33 @@ void CalculateDirectionVector(_SaveData current, _SaveData target) {
     Dis.dy = targetLat - currentLat; // 纬度方向
 	Dis.isValid = 1; // 设置为有效
    
+}
+//针对gps格式代替CalculateDirectionVector的解算，加快速度
+float str2float(const char* str) {
+    float result = 0.0f;
+    float decimal_place = 0.1f;  // 用于处理小数部分
+
+    // 处理整数部分
+    while (*str != '\0' && *str != '.') {
+        if (*str >= '0' && *str <= '9') {
+            result = result * 10 + (*str - '0');  // 通过累加数字
+        }
+        str++;
+    }
+
+    // 如果遇到小数点，开始处理小数部分
+    if (*str == '.') {
+        str++;  // 跳过小数点
+        while (*str != '\0') {
+            if (*str >= '0' && *str <= '9') {
+                result += (*str - '0') * decimal_place;  // 将数字乘以对应的小数位置
+                decimal_place /= 10;  // 每处理一位小数，位置向右移动
+            }
+            str++;
+        }
+    }
+
+    return result;
 }
 
 void Delay_ms(vu32 count)
