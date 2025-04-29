@@ -44,8 +44,8 @@ typedef struct {
 extern _SaveData my_target;
 extern _SaveData Save_Data;
 extern  DirectionVector Dis;
+float str2float(const char* str);
 void GPS_Init(void);
 void parseGpsBuffer(void);
-
 void CalculateDirectionVector(_SaveData current, _SaveData target);
 #endif

@@ -105,26 +105,29 @@ void BFTM1_Config(void)
     BFTM_EnaCmd(HT_BFTM1, ENABLE);
 }
 
+
 //检查拉力传感器是否达到拉力上限
-//void Check_Force(void) 
-//{
-//    static u8 alert_sent = 0;
-//    Get_Weight();
-//    
-//    if (Weight_Shiwu > THRESHOLD) 
-//    {
-//        if(!alert_sent)
-//        {
-//            alert_sent = 1;
-//            SendForceAlert(Weight_Shiwu);  //达到上限就报警，同时发短信/打电话给手机，同时小车停止运动
-//        }
-//    }
-//    else 
-//    {
-//        alert_sent = 0;  // 清除标志
-//    }
-//}
-//
+bool Check_Force(void) 
+{
+    static u8 alert_sent = 0;
+    Get_Weight();
+    
+    if (Weight_Shiwu > THRESHOLD) 
+    {
+        if(!alert_sent)
+        {
+            alert_sent = 1;
+            SendForceAlert();  //达到上限就报警，同时发短信/打电话给手机，同时小车停止运动
+			return false;
+        }
+    }
+    else 
+    {
+        alert_sent = 0;  // 清除标志
+		return true;
+    }
+}
+
 
 void push_delay_ms(vu32 count)
 {
@@ -137,7 +140,6 @@ void push_delay_us(vu32 count)
   count = SystemCoreClock / 8000 * count /1000;
   while(count--);
 }
-
 
 
 
