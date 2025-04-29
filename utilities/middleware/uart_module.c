@@ -476,10 +476,10 @@ void UARTM_DiscardReadBuffer(u32 CH)
  * @brief   This function handles UART interrupt.
  * @retval  None
  ************************************************************************************************************/
-void USART1_IRQHandler(void)
-{
-  USART1_IRQ_HANDLER();
-}
+//void USART1_IRQHandler(void)
+//{
+//  USART1_IRQ_HANDLER();
+//}
 #endif
 #if defined(HT_USART2) && defined(USART2_IRQ_HANDLER)
 /*********************************************************************************************************//**
@@ -654,7 +654,8 @@ static void _UARTM_IRQHandler(u32 CH)
   if (USART_GetFlagStatus(pUARTMState->pUARTx, USART_FLAG_OE))
   {
     __DBG_Printf("Rx Over Run!\n\r");
-    while (1);
+	   USART_ClearFlag(pUARTMState->pUARTx, USART_FLAG_OE);  // Çå³ý´íÎó±êÖ¾
+   // while (1);
   }
 #endif
   if (USART_GetFlagStatus(pUARTMState->pUARTx, USART_FLAG_TXDE))

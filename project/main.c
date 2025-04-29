@@ -7,18 +7,22 @@
 #include "Kaerman.h"
 #include <math.h>
 #include "GPS.h"
+#include "ALL_init.h"
 //-----------------------------------------------------------------------------
 //  uint8_t a = 0;
 //	  uint16_t b = 0;
 //  uint8_t c = 0;
 //	  uint8_t d = 0;
-int32_t Speed_left = 0,Speed_right = 0;
+
 int32_t Speed_Turn = 0;
-int32_t Turn = 0,Veloc = 0;
+int32_t Turn = 0;
+int16_t k =0 ;
+uint16_t ji = 0;
+_SaveData my_target = {0};
 int main(void)
 {
-
-
+RETARGET_Configuration();
+All_init();
 
 	//RETARGET_Configuration();//初始化电机时该模块必须使用           //Initialise the serial monitor with a baud rate of 115200
 	//BMP73T104_Init();                   //Initialise module
@@ -27,7 +31,7 @@ int main(void)
 			/*************************************近接感应模块*********************/
 
    //BiZhang_Init(); 
-  //Bihang_learning();
+ // while(Bihang_learning());
 		/*************************************近接感应模块*********************/
 			/*************************************电机模块*********************/		//RETARGET_Configuration();//初始化电机时该模块必须使用           //Initialise the serial monitor with a baud rate of 115200
 	//BMP73T104_Init();                   //Initialise module
@@ -41,12 +45,8 @@ int main(void)
 //	Motor_Run(Motor_Right_down, -60);
 
 			/*************************************电机模块*********************/
-RETARGET_Configuration();
-while(BiZhang_Init());
-//BMS56M605_my_init();
-Motor_Init();
-INt_Get_Gyro_Init();
-while(BM32S2031_1_distanceLearning());
+
+
 //初始化编码器
 //Set_Motor_decode1();
 //Set_Motor_decode2();
@@ -67,77 +67,81 @@ while(BM32S2031_1_distanceLearning());
 
 	while(1)
 	{
-		
-		static uint8_t jishu = 0;
-		
+		//processBluetoothGPS( &my_target);
+	
+		k= BM32S2031_1_getIRStatus();
 	//Turn	= PID_Turn( encder_left, encder_left,  1, 2);
-		Veloc = BM32S2031_1_getIRStatus();
+	 CalculateDirectionVector(Save_Data,  my_target) ;
+	init_delay(200);
 	if(BM32S2031_1_getIRStatus() == 1)
      {
 		//进行避障，在这个过程中，小车只会转向，不会前进
-		jishu 	++;
-           Motor_Run(Motor_Left_up,+80);
-	Motor_Run(Motor_Left_down,-80);
-	Motor_Run(Motor_Right_up,+80);
-	Motor_Run(Motor_Right_down,-80);
-		   _BMP73T104_delay(1000);
+		ji 	++;
+           Motor_Run(Motor_Left_up,+95);
+	Motor_Run(Motor_Left_down,-95);
+	Motor_Run(Motor_Right_up,+95);
+	Motor_Run(Motor_Right_down,-95);
+		   _BMP73T104_delay(450);
   
-           Motor_Run(Motor_Left_up,+60);
-	Motor_Run(Motor_Left_down,+60);
-	Motor_Run(Motor_Right_up,-60);
-	Motor_Run(Motor_Right_down,-60);
-    _BMP73T104_delay(1000);
-//将小车转回去
-           Motor_Run(Motor_Left_up,-80);
+           Motor_Run(Motor_Left_up,+80);
 	Motor_Run(Motor_Left_down,+80);
 	Motor_Run(Motor_Right_up,-80);
-	Motor_Run(Motor_Right_down,+80);
-		   _BMP73T104_delay(1000);
+	Motor_Run(Motor_Right_down,-80);
+    _BMP73T104_delay(600);
+//将小车转回去
+           Motor_Run(Motor_Left_up,-90);
+	Motor_Run(Motor_Left_down,+90);
+	Motor_Run(Motor_Right_up,-90);
+	Motor_Run(Motor_Right_down,+90);
+		   _BMP73T104_delay(300);
 
 
 	
 		   
      }
-	 Motor_Run(Motor_Left_up,-0);
-	Motor_Run(Motor_Left_down,+0);
-	Motor_Run(Motor_Right_up,-0);
-	Motor_Run(Motor_Right_down,+0);
-//	 else
-//	 {
-//		if(jishu != 0)
-//		{
-//			jishu = 0;
-//			//这里要重新计算目标与现在的方向
-//	    //  CalculateDirectionVector(Save_Data,  target) ;
-//
-//		}
-//		if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
-//     {
-//		if(Dis.isValid)
-//		{
-//			// 判断是否到达目标转向角度
-//			
-//				if(fabs(angle_error) < 0.052)
-//			{
-//		//已经到达目标转向，停止转向，并重新初始化
-//		 Speed_Turn = 0;
-//		current_angle = 0;
-//		Dis.isValid = 0;
-//			}
-//				else
-//			{
-//			 Speed_Turn =  PID_Turn(1, 2);//dx,dy
-//			}
-//	 }
-//
-//	 Motor_Run(Motor_Left_up,+Speed_Turn);
-//	Motor_Run(Motor_Left_down,-Speed_Turn);
-//	Motor_Run(Motor_Right_up,+Speed_Turn);
-//	Motor_Run(Motor_Right_down,-Speed_Turn);
-//	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
-//
-//}
-//	 }
+	 else
+	 {
+//		            Motor_Run(Motor_Left_up,0);
+//	Motor_Run(Motor_Left_down,0);
+//	Motor_Run(Motor_Right_up,0);
+//	Motor_Run(Motor_Right_down,0);
+		if(ji != 0)
+		{
+			ji = 0;
+			//这里要重新计算目标与现在的方向
+	      CalculateDirectionVector(Save_Data,  my_target) ;
+
+		}
+		if(  GPIO_ReadInBit(HT_GPIOB, GPIO_PIN_5) == RESET)
+     {
+		if(Dis.isValid)
+		{
+			// 判断是否到达目标转向角度
+			
+				if(fabs(angle_error) < 0.052)
+			{
+		//已经到达目标转向，停止转向，并重新初始化
+		 Speed_Turn = 0;
+		current_angle = 0;
+		Dis.isValid = 0;
+		angle_error = 5;
+			}
+				else
+			{
+			 Speed_Turn =  PID_Turn(Dis.dx, Dis.dy);//dx,dy
+			}
+	 }
+
+	 
+	 GPIO_PullResistorConfig(HT_GPIOB, GPIO_PIN_5, GPIO_PR_UP);
+
+}
+	 Motor_Run(Motor_Left_up,65+Speed_Turn);
+	Motor_Run(Motor_Left_down,65-Speed_Turn);
+	Motor_Run(Motor_Right_up,-65+Speed_Turn);
+	Motor_Run(Motor_Right_down,-65-Speed_Turn);
+	 }
+	 
 
 
      

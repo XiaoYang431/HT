@@ -50,4 +50,4 @@
   ../../hardware\Motor.h ../../hardware/BMS56M605.h \
   ..\i2c_master_config.h ..\ht32_board_config.h \
   ../../utilities\bmduino_board.h ../../utilities\bmduino_check.h \
-  ../../utilities\middleware/i2c_master.h
+  ../../utilities\middleware/i2c_master.h ../../hardware\SIM900A.h

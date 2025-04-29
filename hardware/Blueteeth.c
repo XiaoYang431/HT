@@ -1,5 +1,5 @@
 #include "ht32f5xxxx_01.h"
-#include "Blueteech.h"
+#include "Blueteeth.h"
 #include "GPS.h"
 #include "BM7701_00_1.h"
 #include <string.h> // 用于 memcpy
@@ -31,7 +31,7 @@ uint8_t Status;
 //------------------------------------------------------------------------------------------
  
 char gpsdata_receive =0;
-
+uint8_t blueteech_avaible_flag=0;
 void processBluetoothGPS(_SaveData *saveData)
 {
     gpsdata_receive = 0;
@@ -73,11 +73,13 @@ if (gps_str[0] == 'T' && gps_str[1] == ':')
             else
             {
                 saveData->isParseData = 0;  // 没找到逗号
+				return ;
             }
         }
         else
         {
             saveData->isParseData = 0;  // 格式错误
+			return;
         }
     
 }
@@ -152,10 +154,10 @@ void BLUETEETH_Init(void)
         else sel = 0xFF; break;
       case 7: if (BM7701_00_1_setCrystalOffset(XTAL_CLOAD) == true) sel++;                     //Set Xtal Cload
         else sel = 0xFF; break;
-      case 8: if (BM7701_00_1_setFeature(BM7701_00_1_FEATURE_DIR,BM7701_00_1_AUTO_SEND_SATUS) == true) sel++;     //Auto Send Satus
+      case 8: if (BM7701_00_1_setFeature(BM7701_00_1_FEATURE_DIR,BM7701_00_1_AUTO_SEND_SATUS) == true) sel++;            //Auto Send Satus
         else sel = 0xFF; break;
-      case 9: if (BM7701_00_1_setAdvCtrl(BM7701_00_1_ENABLE) == true) sel++;                  //Turn on broadcast
-        else sel = 0xFF; break;
+      case 9: if (BM7701_00_1_setAdvCtrl(BM7701_00_1_ENABLE) == true) {sel++;  blueteech_avaible_flag = 1;}               //Turn on broadcast
+        else sel = 0xFF; break; 
       case 0xFF:   
       
         break;//Configure fail

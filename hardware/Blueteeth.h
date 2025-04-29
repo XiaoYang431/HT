@@ -1,6 +1,5 @@
-#ifndef __BLUETEECH_H__
-#define __BLUETEECH_H__
-
+#ifndef BLUETEECH_H
+#define BLUETEECH_H
 #include "ht32.h"
 #include "gps.h"
 

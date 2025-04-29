@@ -203,8 +203,9 @@ int32_t PID_Turn(float dx, float dy)
 {
     float Kp = 500, Kd = 10;//2.5; // PID 参数
     static int32_t bias = 0;
-    int32_t Turn_Amplitude = 100, turn, encoder_temp;
- 
+    int32_t Turn_Amplitude = 100;
+	
+ int32_t turn = 0;
 	float gyro_z =  BMS56M605_readGyroscopeZ();
 	gyro_z = gyro_z*M_PI/180;
 	
@@ -240,38 +241,38 @@ int32_t PID_Turn(float dx, float dy)
 	
    
 }
-int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right)
-{  //Targrt_Speed单位是毫米
-	static float Velocity,Encoder_Least,Encoder =0;
-   static float Encoder_last = 0;
-	static float Encoder_Integral=0;
-	double velocity_KP=0.125;//-300;
-	double velocity_KI= 0.00075;//-0.5;	
-   float velocity_KD=0;
-   float Targrt= (Targrt_Speed/(200*3.14*65))*890;
-	Encoder_Least =(-encoder_left-encoder_right)/2-Targrt;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
-	Encoder *= 0.7;		                                                //===一阶低通滤波器       
-	Encoder += Encoder_Least*0.3;	                                    //===一阶低通滤波器    
-	Encoder_Integral +=Encoder;                                       //===积分出位移 积分时间：5ms                                     
-	if(Encoder_Integral>150)  	Encoder_Integral=150;             //===积分限幅
-	if(Encoder_Integral<-150)		Encoder_Integral=-150;            //===积分限幅	
-
-	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI+ velocity_KD*(Encoder-Encoder_last);        //===速度控制
-	//Velocity = Velocity / 10;
-if(Velocity>100.0  )
-{
-	Velocity =100;
-
-}	
-else if( Velocity < -100)
-{
-	Velocity = -100;
-}
-	Encoder_last = Encoder;	//===上次速度值
- 
-   
-   return Velocity;
-}
+//int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right)
+//{  //Targrt_Speed单位是毫米
+//	static float Velocity,Encoder_Least,Encoder =0;
+//   static float Encoder_last = 0;
+//	static float Encoder_Integral=0;
+//	double velocity_KP=0.125;//-300;
+//	double velocity_KI= 0.00075;//-0.5;	
+//   float velocity_KD=0;
+//   float Targrt= (Targrt_Speed/(200*3.14*65))*890;
+//	Encoder_Least =(-encoder_left-encoder_right)/2-Targrt;                    //===获取最新速度偏差==测量速度（左右编码器之和）-目标速度（此处为零） 
+//	Encoder *= 0.7;		                                                //===一阶低通滤波器       
+//	Encoder += Encoder_Least*0.3;	                                    //===一阶低通滤波器    
+//	Encoder_Integral +=Encoder;                                       //===积分出位移 积分时间：5ms                                     
+//	if(Encoder_Integral>150)  	Encoder_Integral=150;             //===积分限幅
+//	if(Encoder_Integral<-150)		Encoder_Integral=-150;            //===积分限幅	
+//
+//	Velocity=Encoder*velocity_KP+Encoder_Integral*velocity_KI+ velocity_KD*(Encoder-Encoder_last);        //===速度控制
+//	//Velocity = Velocity / 10;
+//if(Velocity>100.0  )
+//{
+//	Velocity =100;
+//
+//}	
+//else if( Velocity < -100)
+//{
+//	Velocity = -100;
+//}
+//	Encoder_last = Encoder;	//===上次速度值
+// 
+//   
+//   return Velocity;
+//}
 uint8_t BMS56M605_my_init(void)
 {
     //if(BMS56M605_selWire(I2C_MASTER_CH1) == BMS56M605_FAILURE)

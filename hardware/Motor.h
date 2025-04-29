@@ -97,7 +97,7 @@ void Motor_Stop(uint8_t Motor_Nam);
 void Motor_shache(uint8_t Motor_Nam);
 void Motor_Get_decode_TMInit(void);
 int32_t PID_Turn(float dx, float dy);
-int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right);
+//int32_t velocity(int32_t Targrt_Speed,int32_t encoder_left,int32_t encoder_right);
 uint8_t BMS56M605_my_init(void);
 void INt_Get_Gyro_Init(void);
 //int16_t Bizhnag_Start(void);

@@ -34,6 +34,18 @@ typedef struct SaveData
 	char isUsefull;		//定位信息是否有效
 } _SaveData;
 
+
+typedef struct {
+    double dx; // 经度方向的差值
+    double dy; // 纬度方向的差值
+	uint8_t isValid; // 是否有效
+} DirectionVector;
+
+extern _SaveData my_target;
+extern _SaveData Save_Data;
+extern  DirectionVector Dis;
 void GPS_Init(void);
 void parseGpsBuffer(void);
+
+void CalculateDirectionVector(_SaveData current, _SaveData target);
 #endif

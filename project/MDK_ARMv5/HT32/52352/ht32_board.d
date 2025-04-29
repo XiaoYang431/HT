@@ -50,5 +50,5 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
   ../../utilities\common/i2c_eeprom.h ../../utilities\common/spi_flash.h \
-  ../../utilities\common/spi_lcd.h ../../utilities\common/lcd.h \
+  ../../utilities\common/spi_lcd.h ../../utilities/common/lcd.h \
   ../../utilities\common/ebi_lcd.h

@@ -29,8 +29,14 @@
 #include "ht32.h"
 #include "GPS.h"
 #include "Motor.h"
+#include "SIM900A.h"
 int32_t   encder_left;
 int32_t   encder_right; 
+extern volatile uint8_t sim_rx_buffer[RX_BUFFER_SIZE];
+extern volatile uint16_t sim_rx_index ;
+ 
+ // 用于标志接收完成
+extern volatile uint8_t sim_rx_flag ;
 /** @addtogroup Project_Template Project Template
   * @{
   */
@@ -70,9 +76,9 @@ void HardFault_Handler(void)
   /*    check following register, especially the PC value (indicate the last instruction before hard fault).*/
   /*    SP + 0x00    0x04    0x08    0x0C    0x10    0x14    0x18    0x1C                                   */
   /*           R0      R1      R2      R3     R12      LR      PC    xPSR                                   */
-  while (gIsContinue == 0)
-  {
-  }
+ while (gIsContinue == 0)
+ {
+ }
   /* 2. Step Out to Find the Clue                                                                           */
   /*    Change the variable "gIsContinue" to any other value than zero in a Local or Watch Window, then     */
   /*    step out the HardFault_Handler to reach the first instruction after the instruction which caused    */

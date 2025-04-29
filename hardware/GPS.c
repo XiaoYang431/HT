@@ -41,7 +41,7 @@ void GPS_Init(void)
     NVIC_SetPriority(USART0_IRQn, 1); // 设置中断优先级为1，优先级值越小，优先级越高
 	
     USART_TxCmd(GPS_UART_HT, ENABLE);
-    USART_RxCmd(GPS_UART_HT, ENABLE);
+    //USART_RxCmd(GPS_UART_HT, ENABLE);
 
 }
 
@@ -205,10 +205,10 @@ void CLR_Buf(void)                           // 串口缓存清理
 // 计算方向向量的函数
 void CalculateDirectionVector(_SaveData current, _SaveData target) {
     // 将纬度和经度从字符串转换为浮点数
-    float currentLat = atof(current.latitude);
-    float currentLon = atof(current.longitude);
-    float targetLat = atof(target.latitude);
-    float targetLon = atof(target.longitude);
+    double currentLat = atof(current.latitude);
+    double currentLon = atof(current.longitude);
+    double targetLat = atof(target.latitude);
+    double targetLon = atof(target.longitude);
 
     // 计算方向向量
     Dis.dx = targetLon - currentLon; // 经度方向

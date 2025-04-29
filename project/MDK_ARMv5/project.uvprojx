@@ -336,7 +336,7 @@
               <MiscControls></MiscControls>
               <Define>USE_HT32_DRIVER, USE_BM53A367A_DVB, USE_HT32F52357_67, USE_MEM_HT32F52367</Define>
               <Undefine></Undefine>
-              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware;..\..\hardware;..\..\utilities\middleware</IncludePath>
+              <IncludePath>..\;..\..\library\CMSIS\Include;..\..\library\Device\Holtek\HT32F5xxxx\Include;..\..\library\HT32F5xxxx_Driver\inc;..\..\library\HT32_USBD_Library\inc;..\..\utilities;..\..\hardware;..\..\hardware;..\..\utilities\middleware;..\..\utilities\HT32_Board;..\..\utilities\common</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -729,6 +729,36 @@
               <FileName>Kaerman.h</FileName>
               <FileType>5</FileType>
               <FilePath>..\..\hardware\Kaerman.h</FilePath>
+            </File>
+            <File>
+              <FileName>ALL_init.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\ALL_init.c</FilePath>
+            </File>
+            <File>
+              <FileName>ALL_init.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\ALL_init.h</FilePath>
+            </File>
+            <File>
+              <FileName>PUSH.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\PUSH.c</FilePath>
+            </File>
+            <File>
+              <FileName>PUSH.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\PUSH.h</FilePath>
+            </File>
+            <File>
+              <FileName>Blueteeth.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\..\hardware\Blueteeth.c</FilePath>
+            </File>
+            <File>
+              <FileName>Blueteeth.h</FileName>
+              <FileType>5</FileType>
+              <FilePath>..\..\hardware\Blueteeth.h</FilePath>
             </File>
             <File>
               <FileName>BM7701_00_1.c</FileName>

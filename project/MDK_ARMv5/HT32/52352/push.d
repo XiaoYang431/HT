@@ -1,4 +1,5 @@
-./ht32/52352/blueteeth.o: ../../hardware/Blueteeth.c \
+./ht32/52352/push.o: ../../hardware/PUSH.c \
+  ../../library/HT32F5xxxx_Driver/inc\ht32.h \
   ../../library/Device/Holtek/HT32F5xxxx/Include\ht32f5xxxx_01.h \
   ../../library/HT32F5xxxx_Driver/inc\ht32_config.h \
   ../../library/CMSIS/Include\core_cm0plus.h \
@@ -45,11 +46,4 @@
   ../../library/HT32F5xxxx_Driver/inc/ht32_serial.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_div.h \
   ../../library/HT32F5xxxx_Driver/inc/ht32_rand.h \
-  ../../hardware/Blueteeth.h ../../hardware/gps.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\string.h \
-  ../../hardware/BM7701_00_1.h ..\i2c_master_config.h \
-  ..\ht32_board_config.h ../../utilities\bmduino_board.h \
-  ../../utilities\bmduino_check.h \
-  ../../utilities\middleware/i2c_master.h \
-  ../../utilities\middleware/uart_module.h \
-  D:\stm32\ application\ARM\ARMCLANG\Bin\..\include\stdlib.h
+  ../../hardware/Send_ForceAlert.h
