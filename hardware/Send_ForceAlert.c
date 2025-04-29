@@ -1,15 +1,16 @@
 #include "sim900a.h"
 #include "Motor.h"
 #include <stdio.h>
-//·¢ËÍ¾¯±¨
-void SendForceAlert(s32 force) 
+//å‘é€è­¦æŠ¥
+void SendForceAlert(void) 
 {
-    char msg[64];
-    snprintf(msg, sizeof(msg), "Force Alert: %dN", force);
-    SIM900A_SendENGSMS("OK", "13322749246");	//·¢¶ÌĞÅ¸øÊÖ»ú
-	SIM900A_delay_ms(100);
-	SIM900A_MakeCall("13322749246");         //´òµç»°¸øÊÖ»ú
-    SIM900A_delay_ms(5000); 	
-	SIM900A_HangUp();                                         
-	                                         //Ğ¡³µÍ£Ö¹ÔË¶¯´úÂë	
+
+    //SIM900A_SendENGSMS("OK", "13322749246");	//å‘çŸ­ä¿¡ç»™æ‰‹æœº
+	SIM900A_SendSms("17707592248", "fall over detected!");
+	//SIM900A_MakeCall("13322749246"); 
+	SIM900A_makeCall( "17707592248");
+	//æ‰“ç”µè¯ç»™æ‰‹æœº
+    	
+	                                       
+	                                         //å°è½¦åœæ­¢è¿åŠ¨ä»£ç 	
 }
